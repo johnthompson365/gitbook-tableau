@@ -34,7 +34,7 @@ The Okta Tableau server app supports _SP-initiated SLO_ \(more on that later\). 
 
 Sign up for an Okta Developer Tenant. The tenant is permanent and will allow you to test out all the features you need: [https://developer.okta.com/signup/](https://developer.okta.com/signup/)
 
-### **Documentation:**
+### **Documentation**
 
 I don't want to duplicate setup instructions here as Okta and Tableau docs do a good job. To be honest I found the Okta instructions better than the Tableau Online ones as they had screenshots. However the Okta Tableau Server ones look out of date.
 
@@ -45,7 +45,7 @@ Tableau Resources: Setup
 [Configure SAML with Okta](https://help.tableau.com/current/online/en-us/saml_config_okta.htm) - Tableau Online  
 [SAML](https://help.tableau.com/current/server/en-us/saml.htm) - Tableau Server general SAML guidance
 
-### **Configuration:**
+### **Configuration**
 
 The key setup configuration items for SAML are described below, I tested TOL but have included some information such as the Return URL and Certificates which are only required by a Tableau Server deployment. Surprisingly, Okta does not require \(or support\) the uploading of the Service Provider Metadata to complete the configuration using metadata exchange, so you have to input details manually.
 
