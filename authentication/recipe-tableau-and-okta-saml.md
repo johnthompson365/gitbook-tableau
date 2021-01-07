@@ -142,3 +142,5 @@ For most users where speed is more important I don't see an issue, but with more
   
 A solution to this limitation would be to create your own SAML 2.0 application as Tableau Online itself does actually support SP-Initiated Single Logout. The benefit of the custom SAML 2.0 app is the better Sign Out user experience however the setup is more complicated and error prone, so there is a trade off. Also the custom SAML app also does not have the SCIM user provisioning built into the app, so you would need to come up another solution for that, which may take more effort than the risk of no SLO.
 
+
+
