@@ -4,5 +4,5 @@
 
 ## Authentication
 
-* [Recipe: Tableau Online and Okta SAML apps](authentication/recipe-tableau-and-okta-saml.md)
+* [Tableau and the Okta apps](authentication/recipe-tableau-and-okta-saml.md)
 
