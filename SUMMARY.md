@@ -4,5 +4,9 @@
 
 ## Authentication
 
-* [Recipe: Tableau and Okta SAML](authentication/recipe-tableau-and-okta-saml.md)
+* [Tableau and the Okta apps](authentication/recipe-tableau-and-okta-saml.md)
+
+## Terraform
+
+* [Notes: learn Terraform Modules](terraform/notes-learn-terraform-modules.md)
 
