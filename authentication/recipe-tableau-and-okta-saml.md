@@ -6,7 +6,7 @@ description: Testing out Tableau Online SAML with Okta
 
 ## Summary or TLDR ;\)
 
-It is simple to get up and running with Tableau and Okta using the provided apps from Okta for both Tableau Online and Server. The Tableau Online app does support SCIM but not SP-Initiated SLO, so you have to weigh up the benefit of the features in your environment. 
+It is simple to get up and running with Tableau and Okta using the provided apps from Okta for both Tableau Online and Server. The key point to understand are the features provided by each app. The Tableau Online app does support SCIM provisioning but not SP-Initiated SLO. The Tableau Server app  purely delivers SAML authentication \(no SCIM\) with SP-Initiated SLO, neither apps support IdP-Initiated SLO.
 
 ### **Scope**
 
