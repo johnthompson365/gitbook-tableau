@@ -14,6 +14,12 @@ I work for Tableau as a Strategic Solution Engineer, and specialise in Security,
 
 These docs are not official Tableau content, and don't represent the views of my employer. If there are errors or areas for improvement please raise an issue on GitHub.
 
+## Content
+
+Notes
+
+Recipes
+
 
 
 
