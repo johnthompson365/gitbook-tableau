@@ -1,16 +1,12 @@
 ---
-description: Testing out Tableau Online SAML with Okta
+description: Here is what I learned when testing out Tableau Online SAML with Okta
 ---
 
 # Recipe: Tableau Online and Okta SAML apps
 
-## Summary or TLDR ;\)
+## **Scope**
 
-It is simple to get up and running with Tableau and Okta using the provided apps from Okta for both Tableau Online and Server. The key point to understand are the features provided by each app. The Tableau Online app does support SCIM provisioning but not SP-Initiated SLO. The Tableau Server app  purely delivers SAML authentication \(no SCIM\) with SP-Initiated SLO, neither apps support IdP-Initiated SLO.
-
-### **Scope**
-
-The testing the integrations between Tableau Online and Okta for SAML authentication. This focuses on the core SAML functionality to get up and running, not advanced configuration or embedded use cases and user provisioning.
+The testing focuses on the integrations between Tableau Online and Okta for SAML authentication. This is the core SAML authentication functionality to get a user securely logged on, not advanced configuration or user provisioning.
 
 ### **Okta Applications**
 
@@ -141,6 +137,10 @@ The validation test highlighted the lack of support in the Okta app for [SP-Init
 For most users where speed is more important I don't see an issue, but with more advanced users who are used to signing out as good practice this may come as a surprise. However, this does highlight a risk around [session hijacking](https://owasp.org/www-community/attacks/Session_hijacking_attack) particularly in shared computer or embedded scenarios. Standard [mitigations](https://attack.mitre.org/techniques/T1539/) for this would be configuring the browser or running a job to regularly delete persistent cookies and session cookies, and then use threat detection and security in depth on your Tableau service. Commonly these cookie attacks are part of phishing scams so user education is important to recognize the warning signs.  
   
 A solution to this limitation would be to create your own SAML 2.0 application as Tableau Online itself does actually support SP-Initiated Single Logout. The benefit of the custom SAML 2.0 app is the better Sign Out user experience however the setup is more complicated and error prone, so there is a trade off. Also the custom SAML app also does not have the SCIM user provisioning built into the app, so you would need to come up another solution for that, which may take more effort than the risk of no SLO.
+
+### Summary
+
+It is simple to get up and running with Tableau and Okta using the provided apps from Okta for both Tableau Online and Server. The key point to understand are the features provided by each app. The Tableau Online app does support SCIM provisioning but not SP-Initiated SLO. The Tableau Server app  purely delivers SAML authentication \(no SCIM\) with SP-Initiated SLO, neither apps support IdP-Initiated SLO.
 
 
 
