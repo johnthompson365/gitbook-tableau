@@ -24,7 +24,7 @@ The Tableau Server Okta App has the following features:
 2. IdP-initiated SSO
 3. **SP-Initiated Single Logout \(SLO\)**
 
-The Okta Tableau server app supports _SP-initiated SLO_ \(more on that later\). Also note neither apps support _IdP-initiated SLO._ ****
+The Okta Tableau server app supports _SP-initiated SLO_ \(more on that later\). Also note neither apps support _IdP-initiated SLO._ _\*\*_
 
 #### Okta Developer Tenant
 
@@ -51,7 +51,7 @@ The key setup configuration items for SAML are described below, I tested TOL but
   <thead>
     <tr>
       <th style="text-align:left">Product</th>
-      <th style="text-align:left"><b>Configuration </b>
+      <th style="text-align:left"><b>Configuration</b>
       </th>
       <th style="text-align:left">Description</th>
     </tr>
@@ -65,7 +65,7 @@ The key setup configuration items for SAML are described below, I tested TOL but
         the IdP. It represents a system entity in metadata, which is a SAML service,
         such as an IdP or an SP as you could have multiple listed in the metadata.
         The value of the entityID attribute SHOULD be the canonical URL of the
-        entity&apos;s metadata document. An example from TOL: <b>entityID=&quot;</b>
+        entity&apos;s metadata document. An example from TOL: <b>entityID=&quot;</b> 
         <a
         href="https://sso.online.tableau.com/public/sp/metadata?alias=4b728bd1-df88-xxxx-xxxx-xxxxxxxxxxxx">https://sso.online.tableau.com/public/sp/metadata?alias=4b728bd1-df88-xxxx-xxxx-xxxxxxxxxxxx</a><b>&quot;</b>
       </td>
@@ -126,7 +126,7 @@ After completing any configuration I usually go through and write validation tes
 | Okta Sign in with SAML user | Sign in to Okta with credentials.  Click on Tableau Online and enter portal | Success |
 | Sign in with MFA | MFA enforced by Okta policy | Success |
 | Sign out from Okta | Select sign out from app in Okta | Failed: Expected to fail as IdP-initiated SLO not supported |
-| Sign out from Tableau | Go to Tableau user profile Select Sign out | Failed: TOL SAML user does not have SP-initiated SLO option in the menu. Success: Tableau Server expected result  |
+| Sign out from Tableau | Go to Tableau user profile Select Sign out | Failed: TOL SAML user does not have SP-initiated SLO option in the menu. Success: Tableau Server expected result |
 | Sign in with Local user from Tableau | Go to Tableau sign in, login with local user | Success: login and no redirection to Okta |
 
 **Exceptions:**  
@@ -134,13 +134,11 @@ The validation test highlighted the lack of support in the Okta app for [SP-Init
 
 ![The mythical Sign Out option!](../.gitbook/assets/image-3.png)
 
-For most users where speed is more important I don't see an issue, but with more advanced users who are used to signing out as good practice this may come as a surprise. However, this does highlight a risk around [session hijacking](https://owasp.org/www-community/attacks/Session_hijacking_attack) particularly in shared computer or embedded scenarios. Standard [mitigations](https://attack.mitre.org/techniques/T1539/) for this would be configuring the browser or running a job to regularly delete persistent cookies and session cookies, and then use threat detection and security in depth on your Tableau service. Commonly these cookie attacks are part of phishing scams so user education is important to recognize the warning signs.  
-  
+For most users where speed is more important I don't see an issue, but with more advanced users who are used to signing out as good practice this may come as a surprise. However, this does highlight a risk around [session hijacking](https://owasp.org/www-community/attacks/Session_hijacking_attack) particularly in shared computer or embedded scenarios. Standard [mitigations](https://attack.mitre.org/techniques/T1539/) for this would be configuring the browser or running a job to regularly delete persistent cookies and session cookies, and then use threat detection and security in depth on your Tableau service. Commonly these cookie attacks are part of phishing scams so user education is important to recognize the warning signs.
+
 A solution to this limitation would be to create your own SAML 2.0 application as Tableau Online itself does actually support SP-Initiated Single Logout. The benefit of the custom SAML 2.0 app is the better Sign Out user experience however the setup is more complicated and error prone, so there is a trade off. Also the custom SAML app also does not have the SCIM user provisioning built into the app, so you would need to come up another solution for that, which may take more effort than the risk of no SLO.
 
 ### Summary
 
-It is simple to get up and running with Tableau and Okta using the provided apps from Okta for both Tableau Online and Server. The key point to understand are the features provided by each app. The Tableau Online app does support SCIM provisioning but not SP-Initiated SLO. The Tableau Server app  purely delivers SAML authentication \(no SCIM\) with SP-Initiated SLO, neither apps support IdP-Initiated SLO.
-
-
+It is simple to get up and running with Tableau and Okta using the provided apps from Okta for both Tableau Online and Server. The key point to understand are the features provided by each app. The Tableau Online app does support SCIM provisioning but not SP-Initiated SLO. The Tableau Server app purely delivers SAML authentication \(no SCIM\) with SP-Initiated SLO, neither apps support IdP-Initiated SLO.
 

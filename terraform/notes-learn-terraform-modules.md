@@ -4,11 +4,11 @@ description: Learning IAC
 
 # Notes: learn Terraform Modules
 
-{% embed url="https://learn.hashicorp.com/tutorials/terraform/module?in=terraform/modules" %}
+{% embed url="https://learn.hashicorp.com/tutorials/terraform/module?in=terraform/modules" caption="" %}
 
-Some of the content is copied as my notes from the Terraform Modules Overview: 
+Some of the content is copied as my notes from the Terraform Modules Overview:
 
-"A Terraform module is a set of Terraform configuration files in a single directory. Even a simple configuration consisting of a single directory with one or more `.tf` files is a module. When you run Terraform commands directly from such a directory, it is considered the **root module**. 
+"A Terraform module is a set of Terraform configuration files in a single directory. Even a simple configuration consisting of a single directory with one or more `.tf` files is a module. When you run Terraform commands directly from such a directory, it is considered the **root module**.
 
 1. Start writing your configuration with modules in mind. 
 2. Use local modules to organize and encapsulate your code. 
@@ -25,7 +25,7 @@ Stored locally:
 
 ![The directory structure from my ](https://johnthompson365.com/wp-content/uploads/2020/12/image-16.png)
 
-### Terraform Files and how they relate to modules <a id="block-3e90f5e5-58b0-47c5-903c-60f79d1107fb"></a>
+## Terraform Files and how they relate to modules <a id="block-3e90f5e5-58b0-47c5-903c-60f79d1107fb"></a>
 
 ![](https://johnthompson365.com/wp-content/uploads/2020/12/image-18.png)
 
@@ -48,13 +48,13 @@ Terraform loads all configuration files within a directory and appends them toge
 
 In my example it means it appends any **.tf** files when applying. So if you create a **windows.tf** and **linux.tf** there can't be any resources or providers with the same name in them or you get complaints!
 
-### Separate States
+## Separate States
 
 The destroy you just ran got rid of resources from both development and production. While you could use the `terraform taint` command to specify which resources you need to recreate individually, that approach is error-prone and requires more work. To avoid having to individually taint resources, you need to separate your development and production state.
 
 State separation signals more mature usage of Terraform; with additional maturity comes additional complexity. There are two primary methods to separate state between environments: directories and _workspaces_.
 
-### Directory:
+## Directory:
 
 **Rule of Thumb:** To separate environments with potential configuration differences, use a directory structure.
 
@@ -63,23 +63,21 @@ State separation signals more mature usage of Terraform; with additional maturit
 
 ![](https://johnthompson365.com/wp-content/uploads/2020/12/image-20.png)
 
-### Workspaces:
+## Workspaces:
 
-**Rule of Thumb:** Use workspaces for environments that do not greatly deviate from one another, to avoid duplicating your configurations. 
+**Rule of Thumb:** Use workspaces for environments that do not greatly deviate from one another, to avoid duplicating your configurations.
 
 1. manage your workspaces in the CLI and be aware of the workspace you are working in to avoid accidentally performing operations on the wrong environment.
 2. Your .tf file must be generic for both environments
 3. You use the .tfvars file to apply the variables required for each environment
 
-Now that your workspace handles the resources as individual environments, only one output is expected. 
+Now that your workspace handles the resources as individual environments, only one output is expected.
 
 ![](https://johnthompson365.com/wp-content/uploads/2020/12/image-21.png)
 
-
-
 ![](../.gitbook/assets/image%20%281%29.png)
 
-### Create your own module
+## Create your own module
 
 I want to be able to deploy a Single Node Windows or Linux Tableau server.
 
