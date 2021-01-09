@@ -20,5 +20,5 @@ If there are errors or areas for improvement or suggestions for content please r
 
 The approach I am taking with Gitbook is to use this as my note taker and blog. If the article has a _Notes:_ prefix, it is intended as just that; quick notes on my work for future reference. If it doesn't have a prefix then it is more of a specific article hopefully with structure and purpose.
 
-NB. "Welcome friends" is lovingly appropriated from Scott Hanselman @shanselman
+NB. "Welcome friends" is lovingly appropriated from Scott Hanselman [@shanselman](https://twitter.com/shanselman)
 
