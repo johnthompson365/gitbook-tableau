@@ -18,5 +18,5 @@ If there are errors or areas for improvement or suggestions for content please r
 
 ### Content
 
-The approach I am taking with content is to use this as my note taker whilst deploying and testing out scenarios. If the article has a Notes prefix, it is intended as just that quick notes on my work for future reference. If it doesn't have a prefix then it is more of a specific article hopefully with structure and purpose.
+The approach I am taking with Gitbook is to use this as my note taker and blog. If the article has a _Notes:_ prefix, it is intended as just that; quick notes on my work for future reference. If it doesn't have a prefix then it is more of a specific article hopefully with structure and purpose.
 
