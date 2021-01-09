@@ -12,5 +12,5 @@
 
 ## Data Authentication
 
-* [Notes: Adventures in Kerberos Delegation](data-authentication/notes-adventures-in-kerberos-delegation.md)
+* [Notes: Adventures in Kerberos Constrained Delegation](data-authentication/notes-adventures-in-kerberos-delegation.md)
 

@@ -2,7 +2,7 @@
 description: My adventures with kerberos delegation to a Presto data source
 ---
 
-# Notes: Adventures in Kerberos Delegation
+# Notes: Adventures in Kerberos Constrained Delegation
 
 The challenge if you wish to accept it is to enable Kerberos authentication to a Presto data source. 
 
