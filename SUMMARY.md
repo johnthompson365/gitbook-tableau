@@ -12,5 +12,5 @@
 
 ## Data Authentication
 
-* [Notes: Adventures in Kerberos Constrained Delegation](data-authentication/notes-adventures-in-kerberos-delegation.md)
+* [Recipe: Tableau and Presto with Kerberos sauce](data-authentication/notes-adventures-in-kerberos-delegation.md)
 
