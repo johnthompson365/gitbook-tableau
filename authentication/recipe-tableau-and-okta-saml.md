@@ -29,10 +29,10 @@ Sign up for an Okta Developer Tenant. The tenant is permanent and will allow you
 
 I don't want to duplicate setup instructions here as Okta and Tableau docs do a good job. To be honest I found the Okta instructions better than the Tableau Online ones as they had screenshots. However the Okta Tableau Server ones look out of date.
 
-Okta Resources: Setup  
-[How to Configure SAML 2.0 for Tableau Online](https://saml-doc.okta.com/SAML_Docs/How-to-Configure-SAML-2.0-for-Tableau-Online.html) -&gt; _this doesn't include SP-Initated SLO as explained below_  
+**Okta Resources: Setup**  
+[How to Configure SAML 2.0 for Tableau Online](https://saml-doc.okta.com/SAML_Docs/How-to-Configure-SAML-2.0-for-Tableau-Online.html)  
 [How to Configure SAML 2.0 for Tableau Server](https://saml-doc.okta.com/SAML_Docs/How-to-Configure-SAML-2.0-for-Tableau-Server.html) -&gt; _this has out of date screenshots - pre-TSM_  
-Tableau Resources: Setup  
+**Tableau Resources: Setup**  
 [Configure SAML with Okta](https://help.tableau.com/current/online/en-us/saml_config_okta.htm) - Tableau Online  
 [SAML](https://help.tableau.com/current/server/en-us/saml.htm) - Tableau Server general SAML guidance
 
@@ -126,5 +126,5 @@ After completing any configuration I usually go through and write validation tes
 
 ### Summary
 
-It is simple to get up and running with Tableau and Okta using the provided apps from Okta for both Tableau Online and Server. The key point to understand are the features provided by each app. The Tableau Online app does support SCIM provisioning. The Tableau Server app purely delivers SAML authentication \(no SCIM\) with SP-Initiated SLO, neither apps support IdP-Initiated SLO.
+It is simple to get up and running with Tableau and Okta using the provided apps from Okta for both Tableau Online and Server. The key point to understand are the features provided by each app. The Tableau Online app provides support for SCIM user and group provisioning. The Tableau Server app purely delivers SAML authentication \(no SCIM\), neither apps support IdP-Initiated SLO.
 
