@@ -2,7 +2,7 @@
 description: My adventures with kerberos delegation to a Presto data source
 ---
 
-# Recipe: Tableau and Presto with Kerberos sauce
+# Draft Recipe: Tableau and Presto with Kerberos sauce
 
 The challenge if you wish to accept it is to enable Kerberos authentication to a Presto data source. 
 

@@ -12,5 +12,5 @@
 
 ## Data Authentication
 
-* [Recipe: Tableau and Presto with Kerberos sauce](data-authentication/notes-adventures-in-kerberos-delegation.md)
+* [Draft Recipe: Tableau and Presto with Kerberos sauce](data-authentication/notes-adventures-in-kerberos-delegation.md)
 
