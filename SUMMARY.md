@@ -4,6 +4,7 @@
 
 ## Authentication
 
+* [Draft Recipe: SAML with Onelogin](authentication/draft-recipe-saml-with-onelogin.md)
 * [Tableau and the Okta apps](authentication/recipe-tableau-and-okta-saml.md)
 
 ## Terraform

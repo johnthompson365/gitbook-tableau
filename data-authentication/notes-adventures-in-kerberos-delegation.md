@@ -57,9 +57,7 @@ The password on the PFX files is `poshacme` because we didn't override the defau
 
 
 
-### Configuring Server-wide SAML with OneLogin
 
-First off, sign up for a free OneLogin developer account.
 
 {% embed url="https://www.onelogin.com/developer-signup" %}
 
