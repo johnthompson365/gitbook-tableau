@@ -9,6 +9,7 @@
 ## Terraform
 
 * [Notes: learn Terraform Modules](terraform/notes-learn-terraform-modules.md)
+* [Notes: My lab setup](terraform/notes-my-lab-setup.md)
 
 ## Data Authentication
 
