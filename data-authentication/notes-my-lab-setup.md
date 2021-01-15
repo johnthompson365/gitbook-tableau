@@ -24,7 +24,8 @@
     </tr>
     <tr>
       <td style="text-align:left">Configure SAML with OneLogin</td>
-      <td style="text-align:left"></td>
+      <td style="text-align:left"><a href="https://onelogin.service-now.com/kb_view_customer.do?sysparm_article=KB0010398">Configure SSO for SAML-Enabled Apps</a>
+      </td>
     </tr>
     <tr>
       <td style="text-align:left">Test user AuthN</td>
