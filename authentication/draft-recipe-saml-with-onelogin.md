@@ -6,7 +6,7 @@ My goal is to setup OneLogin as the Identity Provider for Tableau Server. I want
 
 During Tableau setup I have configured Active Directory as the External Identity store. So before I can authenticate with a user, I need to ensure there is actually a user account created within Tableau. I used the Tableau AD Users and Group Sync to import Adam.Wally from Active Directory. The Tableau username is based on the `sAMAccountName` attribute in AD:
 
-![](../.gitbook/assets/image%20%2823%29.png)
+![](../.gitbook/assets/image%20%2824%29.png)
 
 So when imported:
 
@@ -96,9 +96,13 @@ The user attribute mappings are pretty simple for Tableau.
 
 After uploading the metadata I applied the pending changes in Tableau which required a service restart. I love 'em. I wanted to test a basic SAML configuration without adding in things like SLO or different client SAML options.
 
-![My favourite progress bar.](../.gitbook/assets/image%20%2822%29.png)
+![My favourite progress bar.](../.gitbook/assets/image%20%2823%29.png)
 
 Troubleshooting
+
+![](../.gitbook/assets/image%20%2825%29.png)
+
+![](../.gitbook/assets/image%20%2822%29.png)
 
 {% embed url="https://help.tableau.com/current/server/en-us/saml\_trouble.htm" %}
 
