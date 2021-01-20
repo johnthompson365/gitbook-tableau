@@ -19,7 +19,7 @@ There are two published apps in the [Okta Integration Network \(OIN\)](https://h
 
 It is not just authentication the TOL app provides but also it has [SCIM for user provisioning](https://help.tableau.com/current/online/en-us/scim_config_online.htm).
 
-The Tableau Server Okta App supports the same features **apart** from SCIM. Also note neither apps support _IdP-initiated SLO._ _\*\*_
+The Tableau Server Okta App supports the same features **apart** from SCIM. Also note neither apps support _IdP-initiated SLO._
 
 #### Okta Developer Tenant
 

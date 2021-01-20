@@ -98,15 +98,56 @@ After uploading the metadata I applied the pending changes in Tableau which requ
 
 ![My favourite progress bar.](../.gitbook/assets/image%20%2823%29.png)
 
-Troubleshooting
+### Troubleshooting
+
+I am unable to sign into Tableau using my OneLogin identity. The erro I was getting was:
+
+![](../.gitbook/assets/image%20%2826%29.png)
+
+I reset the password in OneLogin and checked that I could sign in. The OneLogin username is awally@thompson365.com:
+
+![](../.gitbook/assets/image%20%2827%29.png)
+
+In Tableau I wanted to check the usernames:
+
+I couldn't find a way to do it using TSM or tabcmd easily:
+
+{% embed url="https://kb.tableau.com/articles/howto/exporting-user-list" %}
+
+[https://help.tableau.com/current/server/en-us/perf\_collect\_server\_repo.htm](https://help.tableau.com/current/server/en-us/perf_collect_server_repo.htm)
+
+![](../.gitbook/assets/image%20%2828%29.png)
+
+{% embed url="https://help.tableau.com/current/server/en-us/saml\_trouble.htm" %}
+
+To log SAML-related events, `vizportal.log.level` must be set to `debug`. For more information, see [Change Logging Levels](https://help.tableau.com/current/server/en-us/logs_debug_level.htm).
+
+Don't think this is related to logging but... _if you are resetting logging levels for Tableau Server processes, you must stop the server before making the change, and start it applying the pending changes._`tsm stop` _`tsm start`_
+
+```text
+tsm configuration set -k vizportal.log.level -v debug
+tsm pending-changes apply
+
+tsm configuration set -k vizportal.log.level -d
+tsm pending-changes apply
+```
+
+Check for SAML errors in the following files in the unzipped log file snapshot:`\vizportal\vizportal-<n>.log`
+
+![catchy name - vizportal-instrumentation-metrics\_blah\_blah](../.gitbook/assets/image%20%2829%29.png)
+
+  
+
 
 ![](../.gitbook/assets/image%20%2825%29.png)
+
+
 
 ![](../.gitbook/assets/image%20%2822%29.png)
 
 {% embed url="https://help.tableau.com/current/server/en-us/saml\_trouble.htm" %}
 
-Next Steps:
+### Next Steps:
 
 Import users from OneLogin into Tableau \(maybe turn off SAML to do that if no _cli_ way of doing it\)  
 Test out attrbiutes in the viz portal log  
