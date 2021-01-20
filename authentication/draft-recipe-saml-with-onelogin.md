@@ -106,6 +106,16 @@ Troubleshooting
 
 {% embed url="https://help.tableau.com/current/server/en-us/saml\_trouble.htm" %}
 
+Next Steps:
+
+Import users from OneLogin into Tableau \(maybe turn off SAML to do that if no _cli_ way of doing it\)  
+Test out attrbiutes in the viz portal log  
+Check with email aliging with samaccountname  
+Check with AuthN method as AD and ONelogin in OL  
+Check how to connect Desktop to the Tableau users table
+
+
+
 
 
 
