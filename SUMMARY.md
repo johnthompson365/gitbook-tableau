@@ -14,5 +14,11 @@
 ## Data Authentication
 
 * [Draft Recipe: Tableau and Presto with Kerberos sauce](data-authentication/notes-adventures-in-kerberos-delegation.md)
-* [Notes: My lab setup](data-authentication/notes-my-lab-setup.md)
+
+## Useful Links
+
+---
+
+* [My 'go to' Tableau docs...](my-go-to-tableau-docs....md)
+* [My lab setup](notes-my-lab-setup.md)
 
