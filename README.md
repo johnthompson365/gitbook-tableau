@@ -18,7 +18,7 @@ If there are errors or areas for improvement or suggestions for content please r
 
 ### Content
 
-The approach I am taking with Gitbook is to use this as my note taker and blog. If the article has a _Notes:_ prefix, it is intended as just that; quick notes on my work for future reference. If it doesn't have a prefix then it is more of a specific article hopefully with structure and purpose.
+The approach I am taking with Gitbook is to use this as my note taker and blog. If the article has a _Notes:_ prefix, it is intended as just that; quick notes on my work for future reference. If it doesn't have a prefix then it is more of a specific article hopefully with structure and purpose. If it says _Draft_ then you know it'll be partial or rough and ready. I just wanted to stop the barrier to publishing that is 'perfect'.
 
-NB. "Welcome friends" is lovingly appropriated from Scott Hanselman [@shanselman](https://twitter.com/shanselman)
+NB. "Welcome friends" is lovingly appropriated from [@shanselman](https://twitter.com/shanselman)
 
