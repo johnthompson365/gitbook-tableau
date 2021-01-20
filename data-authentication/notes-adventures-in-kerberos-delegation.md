@@ -101,5 +101,5 @@ JDBC Driver - [https://vertica.com/docs/9.2.x/HTML/Content/Authoring/ConnectingT
 
 Presto Web Connector for Tableau: [https://prestodb.io/docs/current/installation/tableau.html](https://prestodb.io/docs/current/installation/tableau.html)
 
-
+Install Presto on Linux: [https://optimalbi.com/setting-up-prestodb-on-linux/](https://optimalbi.com/setting-up-prestodb-on-linux/)
 
