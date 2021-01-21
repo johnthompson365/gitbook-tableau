@@ -12,11 +12,11 @@ First off, sign up for a free OneLogin developer account. This gives me the abil
 
 During Tableau setup I have configured Active Directory as the External Identity store. So before I can authenticate with a user, I need to ensure there is actually a user account created within Tableau. I used the Tableau AD Users and Group Sync to import Adam.Wally from Active Directory. The Tableau username is based on the `sAMAccountName` attribute in AD:
 
-![](../.gitbook/assets/image%20%2824%29.png)
+![AD user account properties](../.gitbook/assets/image%20%2824%29.png)
 
 So when imported:
 
-![](../.gitbook/assets/image%20%2819%29.png)
+![Tableau Users administration table](../.gitbook/assets/image%20%2819%29.png)
 
 As described [here](https://help.tableau.com/v2020.4/server/en-us/security_auth.htm)...If you configure Tableau Server to use Active Directory during installation, then NTLM will be the default user authentication method. So my test with `Adam.Wally` proved I could authenticate with my AD username and password.
 
@@ -26,41 +26,41 @@ I did not want to manually populate OneLogin with user accounts, so I saw they h
 
 The Active Directory Connector was straightforward to download and setup. The connections were all outbound so in my lab it just worked straight away, you know how labs do. However, in an Enterprise you will need to configure the network security for your proxy or egress. So for any OneLogin agent, domains, ip addresses and ports are listed [here](https://onelogin.service-now.com/support?id=kb_article&sys_id=e1899821db8c60103de43e0439961952&kb_category=a0b5e130db185340d5505eea4b961957)... _Use **IP whitelisting** for on-premises agents, like Active Directory Connector_
 
-![](../.gitbook/assets/image%20%2811%29.png)
+![ADC download option](../.gitbook/assets/image%20%2811%29.png)
 
 Once downloaded the setup is simple. I chose the Create OneLogin Service Account option by inputting a password to setup the account via the wizard.
 
-![](../.gitbook/assets/image%20%288%29.png)
+![ADC setup service account option](../.gitbook/assets/image%20%288%29.png)
 
-![](../.gitbook/assets/image%20%2832%29.png)
+![Builtin\Administrators service account](../.gitbook/assets/image%20%2832%29.png)
 
 _...It creates a domain service account named OneLoginADC with Builtin\Administrators credentials in the local Domain..._ This was fine in my lab but I would follow the principle of least privilege in production and there is an article to guide you on how to [Create a Domain Service Account to run Active Directory Connector](https://onelogin.service-now.com/support?id=kb_article&sys_id=e73c3a35dbf0441024c780c74b961909).
 
 The ADC Setup also configures OneLogin Desktop SSO feature, now called [Windows Domain Authentication](https://onelogin.service-now.com/kb_view_customer.do?sysparm_article=KB0010313). This allows for Integrated Windows Authentication if you require it for Windows and Mac desktops. Not a feature I required in my scenario but a default part of the ADC setup.
 
-![](../.gitbook/assets/image%20%284%29.png)
+![Windows Domain Authentication port](../.gitbook/assets/image%20%284%29.png)
 
 The setup is a little confusing here, as it refers to selecting the domains, but also includes the Users container. I just followed with the choice as is.
 
-![](../.gitbook/assets/image%20%286%29.png)
+![Domain selection for sync](../.gitbook/assets/image%20%286%29.png)
 
 Once the setup is complete you go back to the OneLogin portal and is gives you the option to select the OU's/Containers that you would like to synchronise. Always, when I am testing a directory sync I start small. I know I only have 100 test users in my OU so know this should be a pretty quick exercise. I have seen many customers try to sync their entire domain and get into issues with large directories. Start small, test early and then incrementally add if you have 1000s of objects.
 
-![](../.gitbook/assets/image%20%2816%29.png)
+![Portal user import option](../.gitbook/assets/image%20%2816%29.png)
 
-![](../.gitbook/assets/image%20%2814%29.png)
+![ADC Connector status in portal](../.gitbook/assets/image%20%2814%29.png)
 
 Even though the ADC sync was communicating with the Onelogin service. I did not have any new users in the directory. When I check the logs in `C:\Program Data\OneLogin, Inc\logs` I was getting an error about missing attributes.
 
-![](../.gitbook/assets/image%20%2813%29.png)
+![Missing attributes in the logs](../.gitbook/assets/image%20%2813%29.png)
 
 The attributes shown below are required and luckily I knew straight away that my lab users didn't have an email address. 
 
-![](../.gitbook/assets/image%20%2815%29.png)
+![Required sync attributes from AD to OneLogin](../.gitbook/assets/image%20%2815%29.png)
 
 I added the email address for one of my AD users re-synced and away we went!
 
-![](../.gitbook/assets/image%20%2817%29.png)
+![awally](../.gitbook/assets/image%20%2817%29.png)
 
 So the synchronisation is working, now I just need to setup SAML to test signing in with this user.
 
