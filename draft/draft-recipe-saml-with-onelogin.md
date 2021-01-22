@@ -8,7 +8,7 @@ First off, sign up for a free OneLogin developer account. This gives me the abil
 
 {% embed url="https://www.onelogin.com/developer-signup" caption="Click the link to get your OneLogin developer account here! " %}
 
-### Tableau Server Identity Store:
+### Tableau Server Identity Store
 
 During Tableau setup I have configured Active Directory as the External Identity store. So before I can authenticate with a user, I need to ensure there is actually a user account created within Tableau. I used the Tableau AD Users and Group Sync to import Adam.Wally from Active Directory. The Tableau username is based on the `sAMAccountName` attribute in AD:
 
@@ -32,7 +32,7 @@ Once downloaded the setup is simple. I chose the Create OneLogin Service Account
 
 ![ADC setup service account option](../.gitbook/assets/image%20%288%29.png)
 
-![Builtin\Administrators service account](../.gitbook/assets/image%20%2832%29.png)
+![Builtin\Administrators service account](../.gitbook/assets/image%20%2833%29.png)
 
 _...It creates a domain service account named OneLoginADC with Builtin\Administrators credentials in the local Domain..._ This was fine in my lab but I would follow the principle of least privilege in production and there is an article to guide you on how to [Create a Domain Service Account to run Active Directory Connector](https://onelogin.service-now.com/support?id=kb_article&sys_id=e73c3a35dbf0441024c780c74b961909).
 
@@ -64,7 +64,7 @@ I added the email address for one of my AD users re-synced and away we went!
 
 So the synchronisation is working, now I just need to setup SAML to test signing in with this user.
 
-### SAML
+### Tableau Server-Wide SAML setup
 
 The standard setup instructions for Tableau Server are below:
 
@@ -82,11 +82,11 @@ In addition to [all the normal requirements](https://help.tableau.com/current/se
 
 ### Onelogin Apps and SAML
 
-There are a lot of Tableau apps in the Onelogin directory. I selected the Tableau Server app.
+There are a lot of Tableau apps in the Onelogin directory. I selected the Tableau Server app. This was my first mistake ;\)
 
 ![](../.gitbook/assets/image%20%2812%29.png)
 
-Once installed I was looking for an option to upload metadata but there isn't \(similar to Okta\). So the only option I had was to define the Server Name and protocol.
+Once installed I was looking for an option to upload metadata but there isn't \(similar to Okta\). So the only option I had was to define the Server Name and protocol, it seemed strange but I ploughed on regardless.
 
 ![](../.gitbook/assets/image%20%2821%29.png)
 
@@ -102,31 +102,44 @@ After uploading the metadata I applied the pending changes in Tableau which requ
 
 ![My favourite progress bar.](../.gitbook/assets/image%20%2823%29.png)
 
-### Troubleshooting
-
-I am unable to sign into Tableau using my OneLogin identity. The erro I was getting was:
+The services restarted and I attempted my first sign in and... FAIL!  
+The error I was getting was:
 
 ![](../.gitbook/assets/image%20%2826%29.png)
 
-I reset the password in OneLogin and checked that I could sign in. The OneLogin username is awally@thompson365.com:
+### Troubleshooting
 
-![](../.gitbook/assets/image%20%2827%29.png)
+I reset the password in OneLogin and checked that I could sign in. I checked the account in OneLogin and I made sure that I was 'Authenticated by' OneLogin and **not** Active Directory.
 
-In Tableau I wanted to check the usernames:
+![](../.gitbook/assets/image%20%2822%29.png)
 
-I couldn't find a way to do it using TSM or tabcmd easily:
+**In Tableau I wanted to check the usernames in the Identity Store. Weirdly, I couldn't find a way to do this, as I had enabled Server-Wide SAML and was automatically being redirected to the ONeLogin portal for all authentication requests.**
 
-{% embed url="https://kb.tableau.com/articles/howto/exporting-user-list" %}
+So I looked at using TSM or tabcmd but couldn't see an obvious cmd that just listed users! So followed these [instructions](https://kb.tableau.com/articles/howto/exporting-user-list) to access the Server Repository which is a PostgreSQL database.
 
-[https://help.tableau.com/current/server/en-us/perf\_collect\_server\_repo.htm](https://help.tableau.com/current/server/en-us/perf_collect_server_repo.htm)
+I had to ensure I had network access on port 8060 and run a tsm command first as explained [here](https://help.tableau.com/current/server/en-us/perf_collect_server_repo.htm).
 
 ![](../.gitbook/assets/image%20%2828%29.png)
+
+
+
+![Connection details](../.gitbook/assets/image%20%2834%29.png)
+
+Once I had connected I could then browse the \_users table:
+
+![The \_users table in all its glory](../.gitbook/assets/image%20%2837%29.png)
+
+So I needed to ensure that I was passing the value in the Name column as the username attribute in SAML \(_adam.wally_\). This corresponds with the sAMAccountName shown at the top of the article in AD and mapped in OneLogin. I'm a big fan of [SAML-tracer for Firefox](https://addons.mozilla.org/en-US/firefox/addon/saml-tracer/) and Chrome. This showed I was passing the correct attribute:
+
+![SAML-tracer SAML summary](../.gitbook/assets/image%20%2825%29.png)
+
+I needed to go and look at the logs on the Tableau side to see if there was anything obvious reported. 
 
 {% embed url="https://help.tableau.com/current/server/en-us/saml\_trouble.htm" %}
 
 To log SAML-related events, `vizportal.log.level` must be set to `debug`. For more information, see [Change Logging Levels](https://help.tableau.com/current/server/en-us/logs_debug_level.htm).
 
-Don't think this is related to logging but... _if you are resetting logging levels for Tableau Server processes, you must stop the server before making the change, and start it applying the pending changes._`tsm stop` _`tsm start`_
+**Don't think this is related to logging but...** _**if you are resetting logging levels for Tableau Server processes, you must stop the server before making the change, and start it applying the pending changes.**_**`tsm stop`** _**`tsm start`**_
 
 ```text
 tsm configuration set -k vizportal.log.level -v debug
@@ -138,26 +151,27 @@ tsm pending-changes apply
 
 Check for SAML errors in the following files in the unzipped log file snapshot:`\vizportal\vizportal-<n>.log`
 
-![catchy name - vizportal-instrumentation-metrics\_blah\_blah](../.gitbook/assets/image%20%2829%29.png)
+![Ahh, no valid audiences...?](../.gitbook/assets/image%20%2836%29.png)
 
-  
-
-
-![](../.gitbook/assets/image%20%2825%29.png)
+So I did some searching for the error message but I wasn't clear what Audiences was referring to. I then did what I probably should have done at the start and seen if someone else had already set this up. I found this [great article](https://medium.com/@kannanmadhav/configuring-saml-for-tableau-server-with-onelogin-3e9a58cb2931) by a colleague of mine Madhav Kannan that identified my issue. At the very start I had chosen the wrong OneLogin Tableau app. I need to have chosen **Tableau Server\(Signed Response\)**.  
 
 
+![](../.gitbook/assets/image%20%2835%29.png)
 
-![](../.gitbook/assets/image%20%2822%29.png)
+This allows me to configure what OneLogin refers to as the SAML Audience, but we call the Entity ID.
 
-{% embed url="https://help.tableau.com/current/server/en-us/saml\_trouble.htm" %}
+![](../.gitbook/assets/image%20%2832%29.png)
+
+### Single Logout
+
+not working...
 
 ### Next Steps:
 
 Import users from OneLogin into Tableau \(maybe turn off SAML to do that if no _cli_ way of doing it\)  
-Test out attrbiutes in the viz portal log  
-Check with email aliging with samaccountname  
 Check with AuthN method as AD and ONelogin in OL  
-Check how to connect Desktop to the Tableau users table
+Send questions to Robin  
+Work on SLO
 
 
 
