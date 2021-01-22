@@ -1,66 +1,74 @@
-# Draft Recipe: SAML with Onelogin
+---
+description: '1 cup of OneLogin, 1/2 cup of Tableau and Tablespoon of SAML.'
+---
 
-My goal is to setup OneLogin as the Identity Provider for Tableau Server. I want to synchronise users from Active Directory to OneLogin and use those accounts to sign in via SAML to Tableau.
+# Recipe: SAML with Onelogin
 
-### Tableau Server Identity Store:
-
-During Tableau setup I have configured Active Directory as the External Identity store. So before I can authenticate with a user, I need to ensure there is actually a user account created within Tableau. I used the Tableau AD Users and Group Sync to import Adam.Wally from Active Directory. The Tableau username is based on the `sAMAccountName` attribute in AD:
-
-![](../.gitbook/assets/image%20%2824%29.png)
-
-So when imported:
-
-![](../.gitbook/assets/image%20%2819%29.png)
-
-As described [here](https://help.tableau.com/v2020.4/server/en-us/security_auth.htm)...If you configure Tableau Server to use Active Directory during installation, then NTLM will be the default user authentication method. So my test with `Adam.Wally` proved I could authenticate with my AD username and password.
+My goal is to setup OneLogin as the Identity Provider for Tableau Server. I want to synchronise users from Active Directory to Tableau and OneLogin;  then use those accounts to sign in with SAML to Tableau. Simple, right?
 
 ### OneLogin Developer Tenant
 
 First off, sign up for a free OneLogin developer account. This gives me the ability to test out all the features I need.
 
-{% embed url="https://www.onelogin.com/developer-signup" %}
+{% embed url="https://www.onelogin.com/developer-signup" caption="Click the link to get your OneLogin developer account here! " %}
+
+### Tableau Server Identity Store
+
+During Tableau setup I have configured Active Directory as the External Identity store. So before I can authenticate with a user, I need to ensure there is actually a user account created within Tableau. I used the [Tableau AD Users and Group Sync ](https://help.tableau.com/current/server/en-us/users_manage_ad.htm)to import _Adam.Wally_ from Active Directory. The Tableau username is based on the `sAMAccountName` attribute in AD:
+
+![AD user account properties](../.gitbook/assets/image%20%2824%29.png)
+
+So when imported:
+
+![Tableau Users administration table](../.gitbook/assets/image%20%2819%29.png)
+
+As described [here](https://help.tableau.com/v2020.4/server/en-us/security_auth.htm)...If you configure Tableau Server to use Active Directory during installation, then NTLM will be the default user authentication method. So my test with `Adam.Wally` proved I could authenticate with my AD username and password.
 
 ### Active Directory and OneLogin Directories
 
+I did not want to manually populate OneLogin with user accounts, so I saw they had an [Active Directory Connector](https://onelogin.service-now.com/kb_view_customer.do?sysparm_article=KB0010442) and decided to use that.
+
 The Active Directory Connector was straightforward to download and setup. The connections were all outbound so in my lab it just worked straight away, you know how labs do. However, in an Enterprise you will need to configure the network security for your proxy or egress. So for any OneLogin agent, domains, ip addresses and ports are listed [here](https://onelogin.service-now.com/support?id=kb_article&sys_id=e1899821db8c60103de43e0439961952&kb_category=a0b5e130db185340d5505eea4b961957)... _Use **IP whitelisting** for on-premises agents, like Active Directory Connector_
 
-![](../.gitbook/assets/image%20%2811%29.png)
+![ADC download option](../.gitbook/assets/image%20%2811%29.png)
 
 Once downloaded the setup is simple. I chose the Create OneLogin Service Account option by inputting a password to setup the account via the wizard.
 
-![](../.gitbook/assets/image%20%288%29.png)
+![ADC setup service account option](../.gitbook/assets/image%20%288%29.png)
 
-![](../.gitbook/assets/image%20%289%29.png)
+![Builtin\Administrators service account](../.gitbook/assets/image%20%2833%29.png)
 
-### Question: has this any special permissions?
+_...It creates a domain service account named OneLoginADC with Builtin\Administrators credentials in the local Domain..._ This was fine in my lab but I would follow the principle of least privilege in production and there is an article to guide you on how to [Create a Domain Service Account to run Active Directory Connector](https://onelogin.service-now.com/support?id=kb_article&sys_id=e73c3a35dbf0441024c780c74b961909).
 
-![](../.gitbook/assets/image%20%284%29.png)
+The ADC Setup also configures OneLogin Desktop SSO feature, now called [Windows Domain Authentication](https://onelogin.service-now.com/kb_view_customer.do?sysparm_article=KB0010313). This allows for Integrated Windows Authentication if you require it for Windows and Mac desktops. Not a feature I required in my scenario but a default part of the ADC setup.
 
-### What is OneLogin Desktop SSO - [https://onelogin.service-now.com/kb\_view\_customer.do?sysparm\_article=KB0010313](https://onelogin.service-now.com/kb_view_customer.do?sysparm_article=KB0010313)
+![Windows Domain Authentication port](../.gitbook/assets/image%20%284%29.png)
 
-![](../.gitbook/assets/image%20%286%29.png)
+The setup is a little confusing here, as it refers to selecting the domains, but also includes the Users container. I just followed with the choice as is.
+
+![Domain selection for sync](../.gitbook/assets/image%20%286%29.png)
 
 Once the setup is complete you go back to the OneLogin portal and is gives you the option to select the OU's/Containers that you would like to synchronise. Always, when I am testing a directory sync I start small. I know I only have 100 test users in my OU so know this should be a pretty quick exercise. I have seen many customers try to sync their entire domain and get into issues with large directories. Start small, test early and then incrementally add if you have 1000s of objects.
 
-![](../.gitbook/assets/image%20%2816%29.png)
+![Portal user import option](../.gitbook/assets/image%20%2816%29.png)
 
-![](../.gitbook/assets/image%20%2814%29.png)
+![ADC Connector status in portal](../.gitbook/assets/image%20%2814%29.png)
 
 Even though the ADC sync was communicating with the Onelogin service. I did not have any new users in the directory. When I check the logs in `C:\Program Data\OneLogin, Inc\logs` I was getting an error about missing attributes.
 
-![](../.gitbook/assets/image%20%2813%29.png)
+![Missing attributes in the logs](../.gitbook/assets/image%20%2813%29.png)
 
 The attributes shown below are required and luckily I knew straight away that my lab users didn't have an email address. 
 
-![](../.gitbook/assets/image%20%2815%29.png)
+![Required sync attributes from AD to OneLogin](../.gitbook/assets/image%20%2815%29.png)
 
 I added the email address for one of my AD users re-synced and away we went!
 
-![](../.gitbook/assets/image%20%2817%29.png)
+![awally](../.gitbook/assets/image%20%2817%29.png)
 
 So the synchronisation is working, now I just need to setup SAML to test signing in with this user.
 
-### SAML
+### Tableau Server-Wide SAML setup
 
 The standard setup instructions for Tableau Server are below:
 
@@ -78,11 +86,11 @@ In addition to [all the normal requirements](https://help.tableau.com/current/se
 
 ### Onelogin Apps and SAML
 
-There are a lot of Tableau apps in the Onelogin directory. I selected the Tableau Server app.
+There are a lot of Tableau apps in the Onelogin directory. I selected the **Tableau Server SAML 2.0** app. _This was my first mistake ;\)_
 
 ![](../.gitbook/assets/image%20%2812%29.png)
 
-Once installed I was looking for an option to upload metadata but there isn't \(similar to Okta\). So the only option I had was to define the Server Name and protocol.
+Once installed I was looking for an option to upload metadata but there isn't \(similar to Okta\). So the only option I had was to define the Server Name and protocol, it seemed strange as normally I would have to input the Entity ID and ACS when configuring Tableau Online with an IdP, but I ploughed on regardless _\(mistake \#2\)_.
 
 ![](../.gitbook/assets/image%20%2821%29.png)
 
@@ -98,31 +106,42 @@ After uploading the metadata I applied the pending changes in Tableau which requ
 
 ![My favourite progress bar.](../.gitbook/assets/image%20%2823%29.png)
 
-### Troubleshooting
-
-I am unable to sign into Tableau using my OneLogin identity. The erro I was getting was:
+The services restarted and I attempted my first sign in and... FAIL!  
+The error I was getting was:
 
 ![](../.gitbook/assets/image%20%2826%29.png)
 
-I reset the password in OneLogin and checked that I could sign in. The OneLogin username is awally@thompson365.com:
+### Troubleshooting
 
-![](../.gitbook/assets/image%20%2827%29.png)
+I reset the password in OneLogin and checked that I could sign in. I checked the account in OneLogin and I made sure that I was 'Authenticated by' OneLogin and **not** Active Directory.
 
-In Tableau I wanted to check the usernames:
+![](../.gitbook/assets/image%20%2822%29.png)
 
-I couldn't find a way to do it using TSM or tabcmd easily:
+In Tableau I wanted to check the usernames in the Identity Store. Weirdly, I couldn't find a way to do this, as I had enabled Server-Wide SAML and was automatically being redirected to the OneLogin portal for all authentication requests.
 
-{% embed url="https://kb.tableau.com/articles/howto/exporting-user-list" %}
+So I looked at using TSM or tabcmd but couldn't see an obvious cmd that just listed users \(maybe I missed something\). So followed these [instructions](https://kb.tableau.com/articles/howto/exporting-user-list) to access the Server Repository which is a PostgreSQL database.
 
-[https://help.tableau.com/current/server/en-us/perf\_collect\_server\_repo.htm](https://help.tableau.com/current/server/en-us/perf_collect_server_repo.htm)
+I had to ensure I had network access on port 8060 and run a tsm command first as explained [here](https://help.tableau.com/current/server/en-us/perf_collect_server_repo.htm).
 
 ![](../.gitbook/assets/image%20%2828%29.png)
+
+
+
+![Connection details](../.gitbook/assets/image%20%2834%29.png)
+
+Once I had connected I could then browse the \_users table:
+
+![The \_users table in all its glory](../.gitbook/assets/image%20%2837%29.png)
+
+So I needed to ensure that I was passing the value in the Name column as the username attribute in SAML \(_adam.wally_\). This corresponds with the sAMAccountName shown at the top of the article in AD and mapped in OneLogin. I'm a big fan of [SAML-tracer for Firefox](https://addons.mozilla.org/en-US/firefox/addon/saml-tracer/) and Chrome. This showed I was passing the correct attribute:
+
+![SAML-tracer SAML summary](../.gitbook/assets/image%20%2825%29.png)
+
+I needed to go and look at the logs on the Tableau side to see if there was anything obvious reported. 
 
 {% embed url="https://help.tableau.com/current/server/en-us/saml\_trouble.htm" %}
 
 To log SAML-related events, `vizportal.log.level` must be set to `debug`. For more information, see [Change Logging Levels](https://help.tableau.com/current/server/en-us/logs_debug_level.htm).
-
-Don't think this is related to logging but... _if you are resetting logging levels for Tableau Server processes, you must stop the server before making the change, and start it applying the pending changes._`tsm stop` _`tsm start`_
 
 ```text
 tsm configuration set -k vizportal.log.level -v debug
@@ -134,30 +153,50 @@ tsm pending-changes apply
 
 Check for SAML errors in the following files in the unzipped log file snapshot:`\vizportal\vizportal-<n>.log`
 
-![catchy name - vizportal-instrumentation-metrics\_blah\_blah](../.gitbook/assets/image%20%2829%29.png)
+![Ahh, no valid audiences...?](../.gitbook/assets/image%20%2836%29.png)
 
-  
-
-
-![](../.gitbook/assets/image%20%2825%29.png)
+So I did some searching for the error message but I wasn't clear what Audiences was referring to. I then did what I probably should have done at the start and seen if someone else had already set this up. I found this [great article](https://medium.com/@kannanmadhav/configuring-saml-for-tableau-server-with-onelogin-3e9a58cb2931) by a colleague of mine Madhav Kannan that identified my issue. At the very start I had chosen the wrong OneLogin Tableau app. I need to have chosen **Tableau Server\(Signed Response\)**.  
 
 
+![](../.gitbook/assets/image%20%2835%29.png)
 
-![](../.gitbook/assets/image%20%2822%29.png)
+This allows me to configure what OneLogin refers to as the SAML [Audience](https://support.okta.com/help/s/article/Common-SAML-Terms?language=en_US), but we reference as the value  Entity ID.
 
-{% embed url="https://help.tableau.com/current/server/en-us/saml\_trouble.htm" %}
+![Remember this from the Tableau SAML configuration?](../.gitbook/assets/image%20%2839%29.png)
 
-### Next Steps:
+So this time the OneLogin app makes more sense.
 
-Import users from OneLogin into Tableau \(maybe turn off SAML to do that if no _cli_ way of doing it\)  
-Test out attrbiutes in the viz portal log  
-Check with email aliging with samaccountname  
-Check with AuthN method as AD and ONelogin in OL  
-Check how to connect Desktop to the Tableau users table
+![](../.gitbook/assets/image%20%2832%29.png)
 
+### Single Logout
 
+After logging on to the server I noticed I did not have option to sign out of Tableau. This feature is enabled by importing the SAML Single Logout \(SLO\) Endpoint as part of the OneLogin IdP metadata. However despite uploading the correct metadata it was not available:
 
+![How can I sign out?](../.gitbook/assets/image%20%2841%29.png)
 
+Looking at the metadata XML below you can see there are different HTTP methods used for SLO and SSO.
+
+![HTTP Redirect](../.gitbook/assets/image%20%2840%29.png)
+
+As our [SAML Requirements](https://help.tableau.com/current/server/en-us/saml_requ.htm#xml_requirements) documentation states... ****_**HTTP POST**: Tableau Server accepts only HTTP POST requests for SAML communications. HTTP Redirect is not supported._ So this is never going to work.
+
+#### **How it should work?**
+
+![My nice shiny Sign Out](../.gitbook/assets/image-3.webp)
+
+### Conclusion
+
+#### OneLogin
+
+Getting Active Directory sync'ed up to OneLogin was surprisingly easy in my little lab which is a good sign. I like the outbound ADC agent, \(similar to the Azure connectors\) in not requiring reverse proxies. Naturally it would take a lot more planning in an Enterprise but if you get stuck in a lab that would be more concerning. 
+
+#### 
+
+The number of Tableau apps in OneLogin is confusing so pay attention and pick the right one, ...do what I say not what I do! 
+
+#### SAML
+
+Be aware of the lack of SLO currently in OneLogin for Tableau Server. 
 
 
 

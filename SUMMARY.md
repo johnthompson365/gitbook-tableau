@@ -4,6 +4,7 @@
 
 ## Authentication
 
+* [Recipe: SAML with Onelogin](authentication/draft-recipe-saml-with-onelogin.md)
 * [Tableau and the Okta apps](authentication/recipe-tableau-and-okta-saml.md)
 
 ## Terraform
@@ -23,5 +24,4 @@
 ## Drafts
 
 * [Draft Recipe: Tableau and Presto with Kerberos sauce](drafts/notes-adventures-in-kerberos-delegation.md)
-* [Draft Recipe: SAML with Onelogin](drafts/draft-recipe-saml-with-onelogin.md)
 
