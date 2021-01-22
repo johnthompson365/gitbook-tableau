@@ -82,7 +82,7 @@ In addition to [all the normal requirements](https://help.tableau.com/current/se
 
 ### Onelogin Apps and SAML
 
-There are a lot of Tableau apps in the Onelogin directory. I selected the Tableau Server app. This was my first mistake ;\)
+There are a lot of Tableau apps in the Onelogin directory. I selected the **Tableau Server SAML 2.0** app. This was my first mistake ;\)
 
 ![](../.gitbook/assets/image%20%2812%29.png)
 
