@@ -20,8 +20,8 @@
 * [My 'go to' Tableau docs...](my-go-to-tableau-docs....md)
 * [My lab setup](notes-my-lab-setup.md)
 
-## Draft
+## Drafts
 
-* [Draft Recipe: Tableau and Presto with Kerberos sauce](draft/notes-adventures-in-kerberos-delegation.md)
-* [Draft Recipe: SAML with Onelogin](draft/draft-recipe-saml-with-onelogin.md)
+* [Draft Recipe: Tableau and Presto with Kerberos sauce](drafts/notes-adventures-in-kerberos-delegation.md)
+* [Draft Recipe: SAML with Onelogin](drafts/draft-recipe-saml-with-onelogin.md)
 

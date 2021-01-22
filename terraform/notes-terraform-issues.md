@@ -22,6 +22,25 @@
       </td>
       <td style="text-align:left"></td>
     </tr>
+    <tr>
+      <td style="text-align:left">Azure Key Vault Certificate</td>
+      <td style="text-align:left">Error: purging Certificate &quot;winrm-TABWIN-cert&quot; keyvault.BaseClient#PurgeDeletedCertificate:
+        Failure responding to request: StatusCode=403 -- Original Error: autorest/azure:
+        Service returned an error. Status=403 Code=&quot;Forbidden&quot; Message=&quot;The
+        user, group or application &apos;appid=04b07795-&apos;xxx does not have
+        certificates purge permission on key vault &apos;tabwinkv;location=westus&apos;.</td>
+      <td
+      style="text-align:left">
+        <p><b>To be tested</b>
+        </p>
+        <p>certificate_permissions = [&quot;purge&quot; ]</p>
+        </td>
+    </tr>
+    <tr>
+      <td style="text-align:left"></td>
+      <td style="text-align:left"></td>
+      <td style="text-align:left"></td>
+    </tr>
   </tbody>
 </table>
 
