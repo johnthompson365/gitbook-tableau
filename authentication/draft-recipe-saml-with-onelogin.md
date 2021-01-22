@@ -188,15 +188,11 @@ As our [SAML Requirements](https://help.tableau.com/current/server/en-us/saml_re
 
 #### OneLogin
 
-Getting Active Directory sync'ed up to OneLogin was surprisingly easy in my little lab which is a good sign. I like the outbound ADC agent, \(similar to the Azure connectors\) in not requiring reverse proxies. Naturally it would take a lot more planning in an Enterprise but if you get stuck in a lab that would be more concerning. 
-
-#### 
-
-The number of Tableau apps in OneLogin is confusing so pay attention and pick the right one, ...do what I say not what I do! 
+Getting Active Directory sync'ed up to OneLogin was surprisingly easy in my little lab which is a good sign. I like the outbound ADC agent, \(similar to the Azure connectors\) in not requiring reverse proxies. Naturally it would take a lot more planning in an Enterprise but if you get stuck in a lab that would be more concerning. The number of Tableau apps in OneLogin is confusing so pay attention and pick the right one, ...do what I say not what I do! 
 
 #### SAML
 
-Be aware of the lack of SLO currently in OneLogin for Tableau Server. 
+If you setup Server Wide SAML then know that it means **all accounts** and you can't login with any other AuthN method. So, ensure all necessary accounts are sync'ed into your IdP \(such as admins\) or be ready to disable SAML for a workaround. Also, be aware of the lack of SLO currently in OneLogin for Tableau Server. 
 
 
 
