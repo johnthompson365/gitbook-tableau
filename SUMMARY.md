@@ -8,8 +8,8 @@
 
 ## Terraform
 
-* [Notes: learn Terraform Modules](terraform/notes-learn-terraform-modules.md)
-* [Notes: Terraform Issues](terraform/notes-terraform-issues.md)
+* [My Notes: learn Terraform Modules](terraform/notes-learn-terraform-modules.md)
+* [Terraform Issues](terraform/notes-terraform-issues.md)
 
 ## Data Authentication
 

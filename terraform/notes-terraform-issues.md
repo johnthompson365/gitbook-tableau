@@ -1,4 +1,4 @@
-# Notes: Terraform Issues
+# Terraform Issues
 
 <table>
   <thead>

@@ -2,7 +2,7 @@
 description: Learning IAC
 ---
 
-# Notes: learn Terraform Modules
+# My Notes: learn Terraform Modules
 
 {% embed url="https://learn.hashicorp.com/tutorials/terraform/module?in=terraform/modules" caption="" %}
 
