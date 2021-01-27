@@ -174,11 +174,11 @@ After logging on to the server I noticed I did not have option to sign out of Ta
 
 ![How can I sign out?](../.gitbook/assets/image%20%2841%29.png)
 
-Looking at the metadata XML below you can see there are different HTTP methods used for SLO and SSO.
+Looking at the metadata XML below you can see there are different HTTP methods used for SLO and SSO, _redirect_ and _post_ respectively.
 
 ![HTTP Redirect](../.gitbook/assets/image%20%2840%29.png)
 
-As our [SAML Requirements](https://help.tableau.com/current/server/en-us/saml_requ.htm#xml_requirements) documentation states... ****_**HTTP POST**: Tableau Server accepts only HTTP POST requests for SAML communications. HTTP Redirect is not supported._ So this is never going to work.
+As our [SAML Requirements](https://help.tableau.com/current/server/en-us/saml_requ.htm#xml_requirements) documentation states... ****_**HTTP POST**: Tableau Server accepts only HTTP POST requests for SAML communications. HTTP Redirect is not supported._ So this is never going to work with OneLogin.
 
 #### **How it should work:**
 
@@ -194,9 +194,9 @@ Getting Active Directory sync'ed up to OneLogin was surprisingly easy in my litt
 
 If you setup Server Wide SAML then know that it means **all accounts** and you can't login with any other AuthN method. So, ensure all necessary accounts are sync'ed into your IdP \(such as admins\) or be ready to disable SAML for a workaround. Also, be aware of the lack of SLO currently in OneLogin for Tableau Server. 
 
-**Single Logout**
+#### **Single Logout**
 
-With the lack of Single Logout, I don't see this as an issue for many users where speed is important by just closing a browser, but with more advanced users who are used to signing out as good practice this may come as a surprise. However, this does highlight a risk around [session hijacking ](https://owasp.org/www-community/attacks/Session_hijacking_attack)particularly in shared computer or embedded scenarios. Standard mitigations for this would be configuring the browser or running a job to regularly delete persistent cookies and session cookies, and then use threat detection and security in depth with TLS and anti-malware. Commonly these cookie attacks are part of phishing scams so user education is important to recognize the warning signs.
+With the lack of Single Logout, I don't see this as an issue for many users where speed is important by just closing a browser; but with more advanced users who are used to signing out as good practice this may come as a surprise. However, this does highlight a risk around [session hijacking ](https://owasp.org/www-community/attacks/Session_hijacking_attack)particularly in shared computer or embedded scenarios. Standard mitigations for this would be configuring the browser or running a job to regularly delete persistent cookies and session cookies, and then use threat detection and security in depth with TLS and anti-malware. Commonly these cookie attacks are part of phishing scams so user education is important to recognize the warning signs.
 
 
 
