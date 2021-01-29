@@ -23,7 +23,7 @@
 
 * [Draft Recipe: Tableau and Presto with Kerberos sauce](drafts/notes-adventures-in-kerberos-delegation.md)
 
-## Account Management
+## DATA AUTHENTICATION
 
-* [Azure AD Provisioning](account-management/azure-ad-provisioning.md)
+* [Kerberos Constrained Delegation](data-authentication/kerberos-constrained-delegation.md)
 

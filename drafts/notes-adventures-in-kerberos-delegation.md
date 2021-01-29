@@ -53,17 +53,9 @@ Because you didn't specify a plugin, it will default to using the `Manual` DNS p
 
 The password on the PFX files is `poshacme` because we didn't override the default with `-PfxPass` or `-PfxPassSecure`.
 
-{% embed url="https://help.tableau.com/current/server/en-us/saml\_requ.htm\#Cert\_Name" %}
 
 
-
-
-
-{% embed url="https://www.onelogin.com/developer-signup" %}
-
-The instructions to follow for setting up Server-wide SAML are here:
-
-{% embed url="https://help.tableau.com/current/server/en-us/config\_saml.htm" %}
+### 
 
 
 

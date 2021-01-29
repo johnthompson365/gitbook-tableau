@@ -172,11 +172,11 @@ So this time the OneLogin app makes more sense.
 
 There is an interesting feature within the SAML configuration that allows you to apply exceptions for both the Desktop and Mobile client.
 
-![](../.gitbook/assets/image%20%2846%29.png)
+![](../.gitbook/assets/image%20%2847%29.png)
 
 When I choose to sign in to the Tableau Server using the desktop client I get challenged by the normal SAML flow \(shown below\).
 
-![SAML Authentication via Desktop client](../.gitbook/assets/image%20%2844%29.png)
+![SAML Authentication via Desktop client](../.gitbook/assets/image%20%2845%29.png)
 
 By deselecting the SAML sign in from Tableau Desktop the flow reverts to the username/password or NTLM AuthN. 
 
@@ -186,7 +186,7 @@ Unfortunately it requires a server restart so go get a cup of tea.
 
 After the restart you will see that the login prompt has changed from being redirected to your SAML IdP, to the normal Tableau server prompt. You will then be able to sign in with your AD/LDAP credentials or Tableau Local username and password. 
 
-![Sign in with your AD credentials or basic username/password](../.gitbook/assets/image%20%2845%29.png)
+![Sign in with your AD credentials or basic username/password](../.gitbook/assets/image%20%2846%29.png)
 
 ### Single Logout
 
