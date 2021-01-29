@@ -12,8 +12,6 @@
 * [My Notes: learn Terraform Modules](terraform/notes-learn-terraform-modules.md)
 * [Terraform Issues](terraform/notes-terraform-issues.md)
 
-## Data Authentication
-
 ## Useful Links
 
 ---

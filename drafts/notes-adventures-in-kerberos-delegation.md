@@ -22,7 +22,7 @@ The environment is a Active Directory joined, Windows Tableau server with users 
 
 ### The first thing I learned
 
-Kerberos User Authentication is separate from Kerberos Data authentication. Authenticating to data sources is actually Kerberos Constrained Delegation which I am more familiar with being a remote proxy access scenario. Review the Tableau content [here](https://help.tableau.com/current/server/en-us/kerberos_keytab.htm#datasource-delegation)
+I'd bundled everything Kerberos'y into 1 bucket but Kerberos **User** Authentication is separate from Kerberos **Data** authentication. Authenticating to data sources is actually Kerberos Constrained Delegation which personally I am more familiar with being a reverse proxy access scenario. Review the Tableau content [here](https://help.tableau.com/current/server/en-us/kerberos_keytab.htm#datasource-delegation)
 
 _You can also use Kerberos delegation to access data sources in an Active Directory. In this scenario, users can be authenticated to Tableau Server with any supported authentication mechanism \(SAML, local authentication, Kerberos, etc\), but can access datasources that are enabled by Kerberos._
 
