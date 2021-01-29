@@ -23,3 +23,7 @@
 
 * [Draft Recipe: Tableau and Presto with Kerberos sauce](drafts/notes-adventures-in-kerberos-delegation.md)
 
+## Account Management
+
+* [Azure AD Provisioning](account-management/azure-ad-provisioning.md)
+
