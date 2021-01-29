@@ -20,7 +20,8 @@
           &quot;keyvault_certificates&quot;: 62: resource &quot;azurerm_virtual_machine_extension&quot;
           &quot;keyvault_certificates&quot; {</p>
       </td>
-      <td style="text-align:left"></td>
+      <td style="text-align:left"><b>In progress</b>
+      </td>
     </tr>
     <tr>
       <td style="text-align:left">Azure Key Vault Certificate</td>
