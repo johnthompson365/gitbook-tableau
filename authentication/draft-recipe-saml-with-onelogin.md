@@ -1,5 +1,5 @@
 ---
-description: '1 cup of OneLogin, 1/2 cup of Tableau and Tablespoon of SAML.'
+description: '1 cup of OneLogin, 1/2 cup of Tableau, Tablespoon of SAML and a pinch of AD.'
 ---
 
 # Recipe: SAML with Onelogin
