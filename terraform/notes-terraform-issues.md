@@ -35,11 +35,38 @@
         <p><b>To be tested</b>
         </p>
         <p>certificate_permissions = [&quot;purge&quot; ]</p>
+        <p></p>
+        <p>didn&apos;t work I am assuming it is something to do with <a href="https://stackoverflow.com/questions/61342357/unable-to-delete-secrets-from-key-vault-with-soft-delete-enabled">Purge Protection</a>
+        </p>
+        <p></p>
+        <p>Again No, as Purge Protection is not enabled. Only soft-delete.</p>
         </td>
     </tr>
     <tr>
+      <td style="text-align:left">Variables</td>
+      <td style="text-align:left">
+        <p>Warning: Value for undeclared variable</p>
+        <p>The root module does not declare a variable named &quot;tenant_id&quot;
+          but a value was found in file &quot;terraform.tfvars&quot;. To use this
+          value, add a &quot;variable&quot; block to the configuration.</p>
+      </td>
+      <td style="text-align:left">
+        <p>Now that is a useful error message.</p>
+        <p>If you want to use terraform.tfvars, the variable also has to be declared
+          in the variables.tf</p>
+      </td>
+    </tr>
+    <tr>
       <td style="text-align:left"></td>
-      <td style="text-align:left"></td>
+      <td style="text-align:left">Error: purging Certificate &quot;winrm-ADFS-cert&quot; (Key Vault &quot;
+        <a
+        href="https://tabwinkv.vault.azure.net/">https://tabwinkv.vault.azure.net/</a>&quot;): keyvault.BaseClient#PurgeDeletedCertificate:
+          Failure responding to request: StatusCode=403 -- Original Error: autorest/azure:
+          Service returned an error. Status=403 Code=&quot;Forbidden&quot; Message=&quot;The
+          user, group or application &apos;appid=04 does not have certificates purge
+          permission on key vault &apos;tabwinkv;location=westus&apos;. For help
+          resolving this issue, please see <a href="https://go.microsoft.com/fwlink/?linkid=2125287">https://go.microsoft.com/fwlink/?linkid=2125287</a>&quot;
+          InnerError={&quot;code&quot;:&quot;ForbiddenByPolicy&quot;}</td>
       <td style="text-align:left"></td>
     </tr>
   </tbody>
