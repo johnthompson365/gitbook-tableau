@@ -2,10 +2,12 @@
 
 * [Welcome friends](README.md)
 
-## Authentication
+## User Authentication
 
-* [Recipe: SAML with Onelogin](authentication/draft-recipe-saml-with-onelogin.md)
-* [Tableau and the Okta apps](authentication/recipe-tableau-and-okta-saml.md)
+* [Recipe: SAML with Onelogin](user-authentication/draft-recipe-saml-with-onelogin.md)
+* [Tableau and the Okta apps](user-authentication/recipe-tableau-and-okta-saml.md)
+
+## DATA AUTHENTICATION
 
 ## Terraform
 
@@ -22,8 +24,5 @@
 ## Drafts
 
 * [Draft Recipe: Tableau and Presto with Kerberos sauce](drafts/notes-adventures-in-kerberos-delegation.md)
-
-## DATA AUTHENTICATION
-
-* [Kerberos Constrained Delegation](data-authentication/kerberos-constrained-delegation.md)
+* [Draft: Kerberos Constrained Delegation](drafts/kerberos-constrained-delegation.md)
 
