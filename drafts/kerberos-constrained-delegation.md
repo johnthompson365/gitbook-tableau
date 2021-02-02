@@ -22,9 +22,9 @@ If I read this [Enabling Kerberos Delegation for SQL Server](https://community.t
 
 We also have the article [Use SAML SSO with Kerberos Database Delegation](https://help.tableau.com/current/server/en-us/saml_with_kerberos.htm), which doesn't refer to enabling kerberos as a user authentication scheme. However it does refer to using _...the Tableau Server keytab_ to access the database.   
   
-the guidance in the [Configuring Kerberos authentication on Tableau server running on Windows](https://medium.com/@tableauman/configuring-kerberos-authentication-on-tableau-server-1917d127b6e3) article from my colleague Andrija Marcic 
+Additionally, some guidance in the [Configuring Kerberos authentication on Tableau server running on Windows](https://medium.com/@tableauman/configuring-kerberos-authentication-on-tableau-server-1917d127b6e3) article from my colleague Andrija Marcic. 
 
-So, my conclusion so far is I just require the keytab configuration for the delegation as I am using SAML SSO...
+
 
 #### Supported Scenarios:
 
@@ -33,6 +33,8 @@ So, my conclusion so far is I just require the keytab configuration for the dele
 #### Unsupported Scenarios:
 
 * MIT Kerberos
+
+
 
 ### SQL and SPN's
 
@@ -63,6 +65,8 @@ setspn -s HTTP/tableau-win2016 thompson365\tableausvc
 
 ![More SetSPN results this time for Tableau](../.gitbook/assets/image%20%2848%29.png)
 
+Awesome article: [https://www.red-gate.com/simple-talk/sql/database-administration/questions-about-kerberos-and-sql-server-that-you-were-too-shy-to-ask/](https://www.red-gate.com/simple-talk/sql/database-administration/questions-about-kerberos-and-sql-server-that-you-were-too-shy-to-ask/)
+
 ### Keytab in my lab
 
 We have a batch file that provides guidance on how to configure your keytab.
@@ -88,5 +92,82 @@ ktpass /princ http/tableau-win2016.thompson365.com@thompson365.com -SetUPN /mapu
 
 ![](../.gitbook/assets/image%20%2850%29.png)
 
-![](../.gitbook/assets/image%20%2851%29.png)
+### Testing
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align:left">Configuration</th>
+      <th style="text-align:left">Test</th>
+      <th style="text-align:left">Result</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align:left">Delete keytab</td>
+      <td style="text-align:left">Add SQL as a datasource in Desktop and check klist/sql script</td>
+      <td
+      style="text-align:left"></td>
+    </tr>
+    <tr>
+      <td style="text-align:left">Delete keytab</td>
+      <td style="text-align:left">Login via browser on workstation and check klist/sql script</td>
+      <td style="text-align:left"></td>
+    </tr>
+    <tr>
+      <td style="text-align:left">Delete keytab</td>
+      <td style="text-align:left">Login via browser on server and check klist/sql script</td>
+      <td style="text-align:left"></td>
+    </tr>
+    <tr>
+      <td style="text-align:left"></td>
+      <td style="text-align:left"></td>
+      <td style="text-align:left"></td>
+    </tr>
+    <tr>
+      <td style="text-align:left"></td>
+      <td style="text-align:left">Add SQL as a datasource in Desktop and check klist/sql scrip</td>
+      <td style="text-align:left">Works on workstation computer</td>
+    </tr>
+    <tr>
+      <td style="text-align:left"></td>
+      <td style="text-align:left">Login via browser on workstation and check klist/sql script</td>
+      <td style="text-align:left">Can&#x2019;t connect to Microsoft SQL Server Detailed Error Message [Microsoft][ODBC
+        SQL Server Driver][SQL Server]Login failed for user &apos;THOMPSON365\tableau-runas&apos;.
+        Integrated authentication failed.
+        <br />2021-02-02 15:14:29.689, (YBlsVSzPedSdTWKp5GyCMAAAAxI,1:1)</td>
+    </tr>
+    <tr>
+      <td style="text-align:left"></td>
+      <td style="text-align:left">Login via browser on server and check klist/sql script</td>
+      <td style="text-align:left">
+        <p>Can&#x2019;t connect to Microsoft SQL Server Detailed Error Message [Microsoft][ODBC
+          SQL Server Driver][SQL Server]Login failed for user &apos;THOMPSON365\tableau-runas&apos;.
+          Integrated authentication failed.
+          <br />2021-02-02 <b>15:02:39.841, </b>
+        </p>
+        <p>(YBlpjyzPedSdTWKp5GyAsQAAAuo,1:0)</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="text-align:left"></td>
+      <td style="text-align:left"></td>
+      <td style="text-align:left"></td>
+    </tr>
+  </tbody>
+</table>
+
+
+
+Logging in to browser on Tableau Server and the workstation. Likely IWA issue with browser
+
+![](../.gitbook/assets/image%20%2856%29.png)
+
+
+
+
+
+When I signed in using Tableau Desktop to the SQL server I received this cached ticket when running klist. When I log out of the desktop app the cached ticket is removed.
+
+![On desktop once signed in to SQL data source](../.gitbook/assets/image%20%2857%29.png)
 
