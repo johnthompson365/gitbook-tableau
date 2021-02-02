@@ -1,5 +1,9 @@
 # Kerberos Constrained Delegation
 
+### Goal
+
+My goal is to configure KCD to a SQL server data source, with the user authentication being [SAML with OneLogin](https://app.gitbook.com/@johnthompson365/s/tableau/~/drafts/-MSUgSon0V7lwJisPCjI/authentication/draft-recipe-saml-with-onelogin). My servers and workstations are all joined to an Active Directory domain and I am using AD as the external Identity store.
+
 ### Requirements
 
 The requirements for [Enabling Kerberos Delegation](https://help.tableau.com/current/server/en-us/kerberos_delegation.htm) authentication to a database for Tableau are:
@@ -9,19 +13,28 @@ The requirements for [Enabling Kerberos Delegation](https://help.tableau.com/cur
 * A domain account must be configured as the Run As service account on Tableau Server.
 * Delegation configured. Grant delegation rights for the Run As service account to the target database Service Principal Names \(SPNs\).
 
-### Supported Scenarios:
+If I read this [Enabling Kerberos Delegation for SQL Server](https://community.tableau.com/s/question/0D54T00000CWcplSAD/enabling-kerberos-delegation-for-sql-server?_fsi=JnpHaLWS&_fsi=JnpHaLWS&_ga=2.182895846.1348344596.1612210017-159812869.1601602564&_fsi=JnpHaLWS) the first step it tells me to configure Kerberos authentication on the server. However I assumed you wouldn't require this to be configured for KCD to a data source. If I then review the guidance on keytab requirements it refers to [Data Source Delegation](https://help.tableau.com/current/server/en-us/kerberos_keytab.htm#datasource-delegation) four key points
+
+1. The computer account for Tableau Server \(Windows or Linux\) must be in Active Directory domain.
+2. The keytab file that you use for Kerberos delegation can be the same keytab that you use for Kerberos user authentication \(SSO\).
+3. The keytab must be mapped to the service principal for Kerberos delegation in Active Directory.
+4. You may use the same keytab for multiple data sources.
+
+We also have the article [Use SAML SSO with Kerberos Database Delegation](https://help.tableau.com/current/server/en-us/saml_with_kerberos.htm), which doesn't refer to enabling kerberos as a user authentication scheme. However it does refer to using _...the Tableau Server keytab_ to access the database.   
+  
+the guidance in the [Configuring Kerberos authentication on Tableau server running on Windows](https://medium.com/@tableauman/configuring-kerberos-authentication-on-tableau-server-1917d127b6e3) article from my colleague Andrija Marcic 
+
+So, my conclusion so far is I just require the keytab configuration for the delegation as I am using SAML SSO...
+
+#### Supported Scenarios:
 
 * Active Directory Kerberos
 
-### Unsupported Scenarios:
+#### Unsupported Scenarios:
 
 * MIT Kerberos
 
-However, if I read this [Enabling Kerberos Delegation for SQL Server](https://community.tableau.com/s/question/0D54T00000CWcplSAD/enabling-kerberos-delegation-for-sql-server?_fsi=JnpHaLWS&_fsi=JnpHaLWS&_ga=2.182895846.1348344596.1612210017-159812869.1601602564&_fsi=JnpHaLWS) the first step it tells me to configure Kerberos authentication on the server. Does a user have to AuthN via kerberos to benefit from KCD? I am not doing those steps just to see how far I get without it.
-
-### Setting up Kerberos for SQL
-
-I am following the guidance in the [Configuring Kerberos authentication on Tableau server running on Windows](https://medium.com/@tableauman/configuring-kerberos-authentication-on-tableau-server-1917d127b6e3) article from my colleague Andrija Marcic to complete the setup. I'll add a few details on the configuration in this article.
+### SQL and SPN's
 
 #### [Register a Service Principal Name for Kerberos Connections](https://docs.microsoft.com/en-us/sql/database-engine/configure-windows/register-a-service-principal-name-for-kerberos-connections?view=sql-server-ver15)
 
@@ -50,11 +63,24 @@ setspn -s HTTP/tableau-win2016 thompson365\tableausvc
 
 ![More SetSPN results this time for Tableau](../.gitbook/assets/image%20%2848%29.png)
 
-My servers are all joined to an Active Directory domain and I am using AD as the external Identity store. 
+### Keytab in my lab
 
-I am testing whether I need to use a keytab or not, as there is conflicting docs out there...  
+We have a batch file that provides guidance on how to configure your keytab.
 
 {% embed url="https://help.tableau.com/current/server/en-us/kerberos\_keytab.htm\#batch-file-set-spn-and-create-keytab-in-active-directory" %}
+
+```text
+ktpass /princ http/tableau-win2016.thompson365.com@thompson365.com -SetUPN /mapuser thompson365\<tableau runas account> /pass <user password> /crypto AES256-SHA1 /ptype KRB5_NT_PRINCIPAL /out tableau.keytab 
+```
+
+![](../.gitbook/assets/image%20%2855%29.png)
+
+\*\*\*\*[https://docs.microsoft.com/en-us/archive/blogs/pie/all-you-need-to-know-about-keytab-files?\_fsi=JnpHaLWS](https://docs.microsoft.com/en-us/archive/blogs/pie/all-you-need-to-know-about-keytab-files?_fsi=JnpHaLWS)  
+[https://social.technet.microsoft.com/wiki/contents/articles/36470.active-directory-using-kerberos-keytabs-to-integrate-non-windows-systems.aspx](https://social.technet.microsoft.com/wiki/contents/articles/36470.active-directory-using-kerberos-keytabs-to-integrate-non-windows-systems.aspx)
+
+\*\*\*\*
+
+**Put something about the security implications of this....**
 
 ![](../.gitbook/assets/image%20%2854%29.png)
 
