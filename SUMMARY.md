@@ -11,7 +11,7 @@
 
 ## Terraform
 
-* [My Notes: learn Terraform Modules](terraform/notes-learn-terraform-modules.md)
+* [Notes: learn Terraform Modules](terraform/notes-learn-terraform-modules.md)
 * [Terraform Issues](terraform/notes-terraform-issues.md)
 
 ## Useful Links
