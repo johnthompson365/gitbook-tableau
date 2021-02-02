@@ -57,17 +57,22 @@ We query for the SPN based on the computer name because "_...Services that run a
 Tableau SPN config
 
 ```text
+setspn -Q */tableau-win2016
+
 setspn -s HTTP/tableau-win2016.thompson365.com thompson365\tableausvc
 setspn -s HTTP/tableau-win2016 thompson365\tableausvc
-```
 
- 
+setspn -D HTTP/tableau-win2016.thompson365.com thompson365\tableausvc
+setspn -D HTTP/tableau-win2016. thompson365\tableausvc
+```
 
 ![More SetSPN results this time for Tableau](../.gitbook/assets/image%20%2848%29.png)
 
-Awesome article: [https://www.red-gate.com/simple-talk/sql/database-administration/questions-about-kerberos-and-sql-server-that-you-were-too-shy-to-ask/](https://www.red-gate.com/simple-talk/sql/database-administration/questions-about-kerberos-and-sql-server-that-you-were-too-shy-to-ask/)
-
 ### Keytab in my lab
+
+Useful notes in the [article](https://social.technet.microsoft.com/wiki/contents/articles/36470.active-directory-using-kerberos-keytabs-to-integrate-non-windows-systems.aspx) talk about how:
+
+> Kerberos keytabs, also known as key table files, are only employed on non-Windows servers. In a homogenous Windows-only environment, keytabs will not ever be used, as the AD service account in conjunction with the Windows Registry and Windows security DLLs provide the Kerberos SSO foundation.
 
 We have a batch file that provides guidance on how to configure your keytab.
 
@@ -84,7 +89,9 @@ ktpass /princ http/tableau-win2016.thompson365.com@thompson365.com -SetUPN /mapu
 
 \*\*\*\*
 
-**Put something about the security implications of this....**
+**Put something about the security implications of this on the runas account:**
+
+**Without the Tableau HTTP SPN configured you do not get the option to configure delegation.**
 
 ![](../.gitbook/assets/image%20%2854%29.png)
 
@@ -93,6 +100,10 @@ ktpass /princ http/tableau-win2016.thompson365.com@thompson365.com -SetUPN /mapu
 ![](../.gitbook/assets/image%20%2850%29.png)
 
 ### Testing
+
+This great article provides a useful SQL script to confirm your client is using kerberos : [https://www.red-gate.com/simple-talk/sql/database-administration/questions-about-kerberos-and-sql-server-that-you-were-too-shy-to-ask/](https://www.red-gate.com/simple-talk/sql/database-administration/questions-about-kerberos-and-sql-server-that-you-were-too-shy-to-ask/)
+
+
 
 <table>
   <thead>
@@ -107,17 +118,7 @@ ktpass /princ http/tableau-win2016.thompson365.com@thompson365.com -SetUPN /mapu
       <td style="text-align:left">Delete keytab</td>
       <td style="text-align:left">Add SQL as a datasource in Desktop and check klist/sql script</td>
       <td
-      style="text-align:left"></td>
-    </tr>
-    <tr>
-      <td style="text-align:left">Delete keytab</td>
-      <td style="text-align:left">Login via browser on workstation and check klist/sql script</td>
-      <td style="text-align:left"></td>
-    </tr>
-    <tr>
-      <td style="text-align:left">Delete keytab</td>
-      <td style="text-align:left">Login via browser on server and check klist/sql script</td>
-      <td style="text-align:left"></td>
+      style="text-align:left">No issues. Keytab not relevant.</td>
     </tr>
     <tr>
       <td style="text-align:left"></td>
@@ -126,48 +127,60 @@ ktpass /princ http/tableau-win2016.thompson365.com@thompson365.com -SetUPN /mapu
     </tr>
     <tr>
       <td style="text-align:left"></td>
-      <td style="text-align:left">Add SQL as a datasource in Desktop and check klist/sql scrip</td>
-      <td style="text-align:left">Works on workstation computer</td>
+      <td style="text-align:left">Add SQL as a datasource in Desktop and check klist/sql script</td>
+      <td
+      style="text-align:left">
+        <p>Signs in on the Windows workstation computer.</p>
+        <p>Creates a cached kerberos ticket (below)</p>
+        </td>
     </tr>
     <tr>
-      <td style="text-align:left"></td>
-      <td style="text-align:left">Login via browser on workstation and check klist/sql script</td>
-      <td style="text-align:left">Can&#x2019;t connect to Microsoft SQL Server Detailed Error Message [Microsoft][ODBC
-        SQL Server Driver][SQL Server]Login failed for user &apos;THOMPSON365\tableau-runas&apos;.
-        Integrated authentication failed.
-        <br />2021-02-02 15:14:29.689, (YBlsVSzPedSdTWKp5GyCMAAAAxI,1:1)</td>
-    </tr>
-    <tr>
-      <td style="text-align:left"></td>
-      <td style="text-align:left">Login via browser on server and check klist/sql script</td>
+      <td style="text-align:left">Delete Tableau SPN</td>
       <td style="text-align:left">
-        <p>Can&#x2019;t connect to Microsoft SQL Server Detailed Error Message [Microsoft][ODBC
-          SQL Server Driver][SQL Server]Login failed for user &apos;THOMPSON365\tableau-runas&apos;.
-          Integrated authentication failed.
-          <br />2021-02-02 <b>15:02:39.841, </b>
-        </p>
-        <p>(YBlpjyzPedSdTWKp5GyAsQAAAuo,1:0)</p>
+        <p>Delete SPN whilst SQL service is still running.</p>
+        <p>Add SQL as a datasource in Desktop and check klist/sql script</p>
       </td>
+      <td style="text-align:left">This had no impact on desktop as it is making a SQL connection not an
+        HTTP connection.</td>
     </tr>
     <tr>
-      <td style="text-align:left"></td>
-      <td style="text-align:left"></td>
-      <td style="text-align:left"></td>
+      <td style="text-align:left">Remove MSSQL SPN from Runas account</td>
+      <td style="text-align:left">Go users and computers and deselect MSSQLSvc from the delegation tab</td>
+      <td
+      style="text-align:left">
+        <p>With the Tableau HTTP SPN deleted, there is not the delegation option
+          available to delete anything.</p>
+        <p>(However, even without that you can still sign in)</p>
+        </td>
+    </tr>
+    <tr>
+      <td style="text-align:left">Delete SQL SPN (<code>setspn -D MSSQLSvc/sql-win2019.thompson365.com sql-win2019)</code>
+      </td>
+      <td style="text-align:left">Add SQL as a datasource in Desktop and check klist/sql script</td>
+      <td
+      style="text-align:left">I am able to sign in via Desktop. It doesn&apos;t pick up a kerberos ticket
+        and it connects via NTLM</td>
     </tr>
   </tbody>
 </table>
 
+When I signed in using Tableau Desktop to the SQL server I received this cached ticket when running klist. 
+
+![A ](../.gitbook/assets/image%20%2857%29.png)
+
+Running the SQL Script shows that the connection from the tableau-desktop workstation is using kerberos.
+
+![](../.gitbook/assets/image%20%2859%29.png)
 
 
-Logging in to browser on Tableau Server and the workstation. Likely IWA issue with browser
+
+![](../.gitbook/assets/image%20%2860%29.png)
+
+Logging in to browser on Tableau Server and the workstation. Likely IWA issue with browser below. _\(Can’t connect to Microsoft SQL Server Detailed Error Message \[Microsoft\]\[ODBC SQL Server Driver\]\[SQL Server\]Login failed for user 'THOMPSON365\tableau-runas'. Integrated authentication failed. 2021-02-02 **15:02:39.841,** \(YBlpjyzPedSdTWKp5GyAsQAAAuo,1:0\)_
 
 ![](../.gitbook/assets/image%20%2856%29.png)
 
 
 
 
-
-When I signed in using Tableau Desktop to the SQL server I received this cached ticket when running klist. When I log out of the desktop app the cached ticket is removed.
-
-![On desktop once signed in to SQL data source](../.gitbook/assets/image%20%2857%29.png)
 
