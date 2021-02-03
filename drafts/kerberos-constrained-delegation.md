@@ -68,24 +68,7 @@ setspn -D HTTP/tableau-win2016. thompson365\tableausvc
 
 ![More SetSPN results this time for Tableau](../.gitbook/assets/image%20%2848%29.png)
 
-### Keytab in my lab
-
-Useful notes in the [article](https://social.technet.microsoft.com/wiki/contents/articles/36470.active-directory-using-kerberos-keytabs-to-integrate-non-windows-systems.aspx) talk about how:
-
-> Kerberos keytabs, also known as key table files, are only employed on non-Windows servers. In a homogenous Windows-only environment, keytabs will not ever be used, as the AD service account in conjunction with the Windows Registry and Windows security DLLs provide the Kerberos SSO foundation.
-
-We have a batch file that provides guidance on how to configure your keytab.
-
-{% embed url="https://help.tableau.com/current/server/en-us/kerberos\_keytab.htm\#batch-file-set-spn-and-create-keytab-in-active-directory" %}
-
-```text
-ktpass /princ http/tableau-win2016.thompson365.com@thompson365.com -SetUPN /mapuser thompson365\<tableau runas account> /pass <user password> /crypto AES256-SHA1 /ptype KRB5_NT_PRINCIPAL /out tableau.keytab 
-```
-
-![](../.gitbook/assets/image%20%2855%29.png)
-
-\*\*\*\*[https://docs.microsoft.com/en-us/archive/blogs/pie/all-you-need-to-know-about-keytab-files?\_fsi=JnpHaLWS](https://docs.microsoft.com/en-us/archive/blogs/pie/all-you-need-to-know-about-keytab-files?_fsi=JnpHaLWS)  
-[https://social.technet.microsoft.com/wiki/contents/articles/36470.active-directory-using-kerberos-keytabs-to-integrate-non-windows-systems.aspx](https://social.technet.microsoft.com/wiki/contents/articles/36470.active-directory-using-kerberos-keytabs-to-integrate-non-windows-systems.aspx)
+### 
 
 \*\*\*\*
 
@@ -99,11 +82,9 @@ ktpass /princ http/tableau-win2016.thompson365.com@thompson365.com -SetUPN /mapu
 
 ![](../.gitbook/assets/image%20%2850%29.png)
 
-### Testing
+### Testing \(breaking it...\)
 
 This great article provides a useful SQL script to confirm your client is using kerberos : [https://www.red-gate.com/simple-talk/sql/database-administration/questions-about-kerberos-and-sql-server-that-you-were-too-shy-to-ask/](https://www.red-gate.com/simple-talk/sql/database-administration/questions-about-kerberos-and-sql-server-that-you-were-too-shy-to-ask/)
-
-
 
 <table>
   <thead>
@@ -172,9 +153,34 @@ Running the SQL Script shows that the connection from the tableau-desktop workst
 
 ![](../.gitbook/assets/image%20%2859%29.png)
 
-
+After I'd removed the Tableau SPN's \(which removes the delegation config too\) the user connection fell back to NTLM. 
 
 ![](../.gitbook/assets/image%20%2860%29.png)
+
+After recreating the SPN's and delegation configuration ont he runas account, I needed to reboot the workstation to revert back to Kerberos from NTLM.
+
+
+
+### Keytab in my lab
+
+Useful notes in the [article](https://social.technet.microsoft.com/wiki/contents/articles/36470.active-directory-using-kerberos-keytabs-to-integrate-non-windows-systems.aspx) talk about how:
+
+> Kerberos keytabs, also known as key table files, are only employed on non-Windows servers. In a homogenous Windows-only environment, keytabs will not ever be used, as the AD service account in conjunction with the Windows Registry and Windows security DLLs provide the Kerberos SSO foundation.
+
+We have a batch file that provides guidance on how to configure your keytab.
+
+{% embed url="https://help.tableau.com/current/server/en-us/kerberos\_keytab.htm\#batch-file-set-spn-and-create-keytab-in-active-directory" %}
+
+```text
+ktpass /princ http/tableau-win2016.thompson365.com@thompson365.com -SetUPN /mapuser thompson365\<tableau runas account> /pass <user password> /crypto AES256-SHA1 /ptype KRB5_NT_PRINCIPAL /out tableau.keytab 
+```
+
+![](../.gitbook/assets/image%20%2855%29.png)
+
+\*\*\*\*[https://docs.microsoft.com/en-us/archive/blogs/pie/all-you-need-to-know-about-keytab-files?\_fsi=JnpHaLWS](https://docs.microsoft.com/en-us/archive/blogs/pie/all-you-need-to-know-about-keytab-files?_fsi=JnpHaLWS)  
+[https://social.technet.microsoft.com/wiki/contents/articles/36470.active-directory-using-kerberos-keytabs-to-integrate-non-windows-systems.aspx](https://social.technet.microsoft.com/wiki/contents/articles/36470.active-directory-using-kerberos-keytabs-to-integrate-non-windows-systems.aspx)
+
+### Browser IWA
 
 Logging in to browser on Tableau Server and the workstation. Likely IWA issue with browser below. _\(Can’t connect to Microsoft SQL Server Detailed Error Message \[Microsoft\]\[ODBC SQL Server Driver\]\[SQL Server\]Login failed for user 'THOMPSON365\tableau-runas'. Integrated authentication failed. 2021-02-02 **15:02:39.841,** \(YBlpjyzPedSdTWKp5GyAsQAAAuo,1:0\)_
 
