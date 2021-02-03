@@ -13,12 +13,12 @@ The requirements for [Enabling Kerberos Delegation](https://help.tableau.com/cur
 * A domain account must be configured as the Run As service account on Tableau Server.
 * Delegation configured. Grant delegation rights for the Run As service account to the target database Service Principal Names \(SPNs\).
 
-If I read this [Enabling Kerberos Delegation for SQL Server](https://community.tableau.com/s/question/0D54T00000CWcplSAD/enabling-kerberos-delegation-for-sql-server?_fsi=JnpHaLWS&_fsi=JnpHaLWS&_ga=2.182895846.1348344596.1612210017-159812869.1601602564&_fsi=JnpHaLWS) the first step it tells me to configure Kerberos authentication on the server. However I assumed you wouldn't require this to be configured for KCD to a data source. If I then review the guidance on keytab requirements it refers to [Data Source Delegation](https://help.tableau.com/current/server/en-us/kerberos_keytab.htm#datasource-delegation) four key points
+_If I read this_ [_Enabling Kerberos Delegation for SQL Server_](https://community.tableau.com/s/question/0D54T00000CWcplSAD/enabling-kerberos-delegation-for-sql-server?_fsi=JnpHaLWS&_fsi=JnpHaLWS&_ga=2.182895846.1348344596.1612210017-159812869.1601602564&_fsi=JnpHaLWS) _the first step it tells me to configure Kerberos authentication on the server. However I assumed you wouldn't require this to be configured for KCD to a data source. If I then review the guidance on keytab requirements it refers to_ [_Data Source Delegation_](https://help.tableau.com/current/server/en-us/kerberos_keytab.htm#datasource-delegation) _four key points_
 
-1. The computer account for Tableau Server \(Windows or Linux\) must be in Active Directory domain.
-2. The keytab file that you use for Kerberos delegation can be the same keytab that you use for Kerberos user authentication \(SSO\).
-3. The keytab must be mapped to the service principal for Kerberos delegation in Active Directory.
-4. You may use the same keytab for multiple data sources.
+1. _The computer account for Tableau Server \(Windows or Linux\) must be in Active Directory domain._
+2. _The keytab file that you use for Kerberos delegation can be the same keytab that you use for Kerberos user authentication \(SSO\)._
+3. _The keytab must be mapped to the service principal for Kerberos delegation in Active Directory._
+4. _You may use the same keytab for multiple data sources._
 
 We also have the article [Use SAML SSO with Kerberos Database Delegation](https://help.tableau.com/current/server/en-us/saml_with_kerberos.htm), which doesn't refer to enabling kerberos as a user authentication scheme. However it does refer to using _...the Tableau Server keytab_ to access the database.   
   
@@ -82,7 +82,7 @@ setspn -D HTTP/tableau-win2016. thompson365\tableausvc
 
 ![](../.gitbook/assets/image%20%2850%29.png)
 
-### Testing \(breaking it...\)
+### Testing \(reverse engineering\)
 
 This great article provides a useful SQL script to confirm your client is using kerberos : [https://www.red-gate.com/simple-talk/sql/database-administration/questions-about-kerberos-and-sql-server-that-you-were-too-shy-to-ask/](https://www.red-gate.com/simple-talk/sql/database-administration/questions-about-kerberos-and-sql-server-that-you-were-too-shy-to-ask/)
 
@@ -100,20 +100,6 @@ This great article provides a useful SQL script to confirm your client is using 
       <td style="text-align:left">Add SQL as a datasource in Desktop and check klist/sql script</td>
       <td
       style="text-align:left">No issues. Keytab not relevant.</td>
-    </tr>
-    <tr>
-      <td style="text-align:left"></td>
-      <td style="text-align:left"></td>
-      <td style="text-align:left"></td>
-    </tr>
-    <tr>
-      <td style="text-align:left"></td>
-      <td style="text-align:left">Add SQL as a datasource in Desktop and check klist/sql script</td>
-      <td
-      style="text-align:left">
-        <p>Signs in on the Windows workstation computer.</p>
-        <p>Creates a cached kerberos ticket (below)</p>
-        </td>
     </tr>
     <tr>
       <td style="text-align:left">Delete Tableau SPN</td>
@@ -147,7 +133,7 @@ This great article provides a useful SQL script to confirm your client is using 
 
 When I signed in using Tableau Desktop to the SQL server I received this cached ticket when running klist. 
 
-![A ](../.gitbook/assets/image%20%2857%29.png)
+![ ](../.gitbook/assets/image%20%2857%29.png)
 
 Running the SQL Script shows that the connection from the tableau-desktop workstation is using kerberos.
 
