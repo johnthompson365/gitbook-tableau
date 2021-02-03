@@ -2,7 +2,7 @@
 
 ### Goal
 
-My goal is to configure KCD to a SQL server data source, with the user authentication being [SAML with OneLogin](https://app.gitbook.com/@johnthompson365/s/tableau/~/drafts/-MSUgSon0V7lwJisPCjI/authentication/draft-recipe-saml-with-onelogin). My servers and workstations are all joined to an Active Directory domain and I am using AD as the external Identity store.
+My goal is to configure KCD to a SQL server data source, with the user authentication being [SAML with OneLogin](https://app.gitbook.com/@johnthompson365/s/tableau/~/drafts/-MSUgSon0V7lwJisPCjI/authentication/draft-recipe-saml-with-onelogin). My servers and workstations are all joined to an Active Directory domain and I am using AD as the Tableau external Identity store.
 
 ### Requirements
 

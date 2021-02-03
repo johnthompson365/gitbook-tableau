@@ -29,9 +29,8 @@
         Failure responding to request: StatusCode=403 -- Original Error: autorest/azure:
         Service returned an error. Status=403 Code=&quot;Forbidden&quot; Message=&quot;The
         user, group or application &apos;appid=04b07795-&apos;xxx does not have
-        certificates purge permission on key vault &apos;tabwinkv;location=westus&apos;.</td>
-      <td
-      style="text-align:left">
+        certificates purge permission on key vault &apos;tabwin&apos;</td>
+      <td style="text-align:left">
         <p><b>To be tested</b>
         </p>
         <p>certificate_permissions = [&quot;purge&quot; ]</p>
@@ -40,7 +39,7 @@
         </p>
         <p></p>
         <p>Again No, as Purge Protection is not enabled. Only soft-delete.</p>
-        </td>
+      </td>
     </tr>
     <tr>
       <td style="text-align:left">Variables</td>
@@ -60,14 +59,13 @@
       <td style="text-align:left"></td>
       <td style="text-align:left">Error: purging Certificate &quot;winrm-ADFS-cert&quot; (Key Vault &quot;
         <a
-        href="https://tabwinkv.vault.azure.net/">https://tabwinkv.vault.azure.net/</a>&quot;): keyvault.BaseClient#PurgeDeletedCertificate:
+        href="https://tabwinkv.vault.azure.net/">https://tabwin/</a>&quot;): keyvault.BaseClient#PurgeDeletedCertificate:
           Failure responding to request: StatusCode=403 -- Original Error: autorest/azure:
           Service returned an error. Status=403 Code=&quot;Forbidden&quot; Message=&quot;The
           user, group or application &apos;appid=04 does not have certificates purge
-          permission on key vault &apos;tabwinkv;location=westus&apos;. For help
-          resolving this issue, please see <a href="https://go.microsoft.com/fwlink/?linkid=2125287">https://go.microsoft.com/fwlink/?linkid=2125287</a>&quot;
-          InnerError={&quot;code&quot;:&quot;ForbiddenByPolicy&quot;}</td>
-      <td style="text-align:left"></td>
+          permission on key vault &apos;tabwinkv;location=westus&apos;. InnerError={&quot;code&quot;:&quot;ForbiddenByPolicy&quot;}</td>
+      <td
+      style="text-align:left"></td>
     </tr>
   </tbody>
 </table>
