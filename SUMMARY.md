@@ -26,3 +26,7 @@
 * [Draft Recipe: Tableau and Presto with Kerberos sauce](drafts/notes-adventures-in-kerberos-delegation.md)
 * [Draft: Kerberos Constrained Delegation](drafts/kerberos-constrained-delegation.md)
 
+---
+
+* [Draft: Azure AD SAML and Tableau Online](draft-azure-ad-saml-and-tableau-online.md)
+
