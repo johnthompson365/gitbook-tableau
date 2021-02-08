@@ -80,9 +80,7 @@ The obvious steps apply of defining your entity ID, uploading certificates and s
 
 #### Certificates:
 
-I chose to use the same certificates I used for the Server SSL.
-
-In addition to [all the normal requirements](https://help.tableau.com/current/server/en-us/saml_requ.htm#Certific) for your SSL certificate you [also need to ensure that](https://help.tableau.com/current/server/en-us/saml_requ.htm#Cert_Name) your certificate for SAML only includes the certificate that applies to Tableau Server and not any other certificates or keys.
+I chose to use the same certificates I used for the Server SSL. In addition to [all the normal requirements](https://help.tableau.com/current/server/en-us/saml_requ.htm#Certific) for your SSL certificate you [also need to ensure that](https://help.tableau.com/current/server/en-us/saml_requ.htm#Cert_Name) your certificate for SAML only includes the certificate that applies to Tableau Server and not any other certificates or keys.
 
 ### Onelogin Apps and SAML
 
@@ -222,7 +220,7 @@ If you setup Server Wide SAML then know that it means **all accounts** and you c
 
 #### **Single Logout**
 
-With the lack of Single Logout, I don't see this as an issue for many users where speed is important by just closing a browser; but with more advanced users who are used to signing out as good practice this may come as a surprise. However, this does highlight a risk around [session hijacking ](https://owasp.org/www-community/attacks/Session_hijacking_attack)particularly in shared computer or embedded scenarios. Standard mitigations for this would be configuring the browser or running a job to regularly delete persistent cookies and session cookies, and then use threat detection and security in depth with TLS and anti-malware. Commonly these cookie attacks are part of phishing scams so user education is important to recognize the warning signs.
+With the lack of Single Logout, I don't see this as an issue for many users where speed is important by just closing a browser; but with more advanced users who are used to signing out as good practice this may come as a surprise. However, this does highlight a risk around [session hijacking ](https://owasp.org/www-community/attacks/Session_hijacking_attack)particularly in shared computer or embedded scenarios. Standard mitigations for this would be configuring the browser or running a job to regularly delete persistent cookies and session cookies, and then use threat detection and security in depth with TLS and anti-malware.
 
 
 
