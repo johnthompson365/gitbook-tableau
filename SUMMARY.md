@@ -5,7 +5,7 @@
 ## User Authentication
 
 * [Recipe: Integrating OneLogin with Tableau](user-authentication/recipe-onelogin-tableau.md)
-* [Tableau and the Okta apps](user-authentication/recipe-tableau-and-okta-saml.md)
+* [Tableau and the Okta SAML apps](user-authentication/tableau-okta-saml-apps.md)
 
 ## DATA AUTHENTICATION
 
