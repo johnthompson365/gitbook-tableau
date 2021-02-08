@@ -115,7 +115,7 @@ I attempted both an IdP-initiated sign on and SP-initiated and got the same erro
 
 ### Troubleshooting
 
-I reset the password in OneLogin and checked that I could sign in. I checked the account in OneLogin and I made sure that I was 'Authenticated by' OneLogin and **not** Active Directory. If it was set to Active Directory I would have had to have used my AD username and password to sign in.
+I reset the password in OneLogin and checked that I could sign in. I checked the account in OneLogin and I made sure that I was 'Authenticated by' OneLogin and **not** Active Directory. If it was set to Active Directory I could use my AD username and password to sign in.
 
 ![](../.gitbook/assets/image%20%2822%29.png)
 
