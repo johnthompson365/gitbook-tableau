@@ -90,7 +90,7 @@ There are a lot of Tableau apps in the Onelogin directory. I selected the **Tabl
 
 ![](../.gitbook/assets/image%20%2812%29.png)
 
-Once installed I was looking for an option to upload metadata but there isn't \(similar to Okta\). So the only option I had was to define the Server Name and protocol, it seemed strange as normally I would have to input the Entity ID and ACS when configuring Tableau Online with an IdP, but I ploughed on regardless _\(mistake \#2\)_.
+Once installed I was looking for an option to upload metadata but there isn't \(similar to Okta\). So the only option I had was to define the Server Name and protocol, it seemed strange as normally I would have to input the Entity ID **and** ACS when configuring Tableau Online with an IdP, but I ploughed on regardless _\(mistake \#2\)_.
 
 ![](../.gitbook/assets/image%20%2821%29.png)
 
@@ -109,7 +109,11 @@ After uploading the metadata I applied the pending changes in Tableau which requ
 The services restarted and I attempted my first sign in and... FAIL!  
 The error I was getting was:
 
+
+
 ![](../.gitbook/assets/image%20%2826%29.png)
+
+I attempted both an IdP-initiated sign on and SP-initiated and got the same error.
 
 ### Troubleshooting
 
@@ -119,7 +123,7 @@ I reset the password in OneLogin and checked that I could sign in. I checked the
 
 In Tableau I wanted to check the usernames in the Identity Store. Weirdly, I couldn't find a way to do this, as I had enabled Server-Wide SAML and was automatically being redirected to the OneLogin portal for all authentication requests.
 
-So I looked at using TSM or tabcmd but couldn't see an obvious cmd that just listed users \(maybe I missed something\). So followed these [instructions](https://kb.tableau.com/articles/howto/exporting-user-list) to access the Server Repository which is a PostgreSQL database.
+So I looked at using **tabcmd** but couldn't see an obvious cmd that just listed users \(maybe I missed something\). Also TSM doesn't contain user information it is only the higher-level server configuration that is managed from the portal. I found these [instructions](https://kb.tableau.com/articles/howto/exporting-user-list) to access the Server Repository which is a PostgreSQL database. 
 
 I had to ensure I had network access on port 8060 and run a tsm command first as explained [here](https://help.tableau.com/current/server/en-us/perf_collect_server_repo.htm).
 
@@ -133,11 +137,13 @@ Once I had connected I could then browse the \_users table:
 
 ![The \_users table in all its glory](../.gitbook/assets/image%20%2837%29.png)
 
-So I needed to ensure that I was passing the value in the Name column as the username attribute in SAML \(_adam.wally_\). This corresponds with the sAMAccountName shown at the top of the article in AD and mapped in OneLogin. I'm a big fan of [SAML-tracer for Firefox](https://addons.mozilla.org/en-US/firefox/addon/saml-tracer/) and Chrome. This showed I was passing the correct attribute:
+Another method I could have used was to connect via the [REST API](https://help.tableau.com/current/api/rest_api/en-us/REST/rest_api_get_started_tutorial_intro.htm) and get the information.
+
+I checked I was passing the value in the Name column as the username attribute in SAML \(_adam.wally_\). This corresponds with the sAMAccountName shown at the top of the article in AD and mapped in OneLogin. I'm a big fan of [SAML-tracer for Firefox](https://addons.mozilla.org/en-US/firefox/addon/saml-tracer/) and Chrome. This showed I was passing the correct attribute:
 
 ![SAML-tracer SAML summary](../.gitbook/assets/image%20%2825%29.png)
 
-I needed to go and look at the logs on the Tableau side to see if there was anything obvious reported. 
+The next step was to look at the logs on the Tableau side to see if there was anything obvious reported. 
 
 {% embed url="https://help.tableau.com/current/server/en-us/saml\_trouble.htm" %}
 
@@ -155,12 +161,12 @@ Check for SAML errors in the following files in the unzipped log file snapshot:`
 
 ![Ahh, no valid audiences...?](../.gitbook/assets/image%20%2836%29.png)
 
-So I did some searching for the error message but I wasn't clear what Audiences was referring to. I then did what I probably should have done at the start and seen if someone else had already set this up. I found this [great article](https://medium.com/@kannanmadhav/configuring-saml-for-tableau-server-with-onelogin-3e9a58cb2931) by a colleague of mine Madhav Kannan that identified my issue. At the very start I had chosen the wrong OneLogin Tableau app. I need to have chosen **Tableau Server\(Signed Response\)**.  
+I did some searching for the error message but I wasn't clear what Audiences was referring to. I then did what I probably should have done at the start and seen if someone else had already set this up. I found this [great article](https://medium.com/@kannanmadhav/configuring-saml-for-tableau-server-with-onelogin-3e9a58cb2931) by a colleague of mine Madhav Kannan that identified my issue. At the very start I had chosen the wrong OneLogin Tableau app. I need to have chosen **Tableau Server\(Signed Response\)**.  
 
 
 ![](../.gitbook/assets/image%20%2835%29.png)
 
-This allows me to configure what OneLogin refers to as the SAML [Audience](https://support.okta.com/help/s/article/Common-SAML-Terms?language=en_US), but we reference as the value  Entity ID.
+This allows me to configure what OneLogin refers to as the SAML [Audience](https://support.okta.com/help/s/article/Common-SAML-Terms?language=en_US), but we reference as the value  **Entity ID**.
 
 ![Remember this from the Tableau SAML configuration?](../.gitbook/assets/image%20%2839%29.png)
 
@@ -170,7 +176,7 @@ So this time the OneLogin app makes more sense.
 
 ### Client Exceptions
 
-There is an interesting feature within the SAML configuration that allows you to apply exceptions for both the Desktop and Mobile client.
+I mentioned earlier that with Server-Wide SAML configured every user had to authenticate using SAML, there is no mixed authentication methods. However, there is an interesting feature within the SAML configuration that allows you to apply exceptions for both the Desktop and Mobile client.
 
 ![](../.gitbook/assets/image%20%2847%29.png)
 
@@ -178,11 +184,11 @@ When I choose to sign in to the Tableau Server using the desktop client I get ch
 
 ![SAML Authentication via Desktop client](../.gitbook/assets/image%20%2845%29.png)
 
-By deselecting the SAML sign in from Tableau Desktop the flow reverts to the username/password or NTLM AuthN. 
+By **deselecting** the SAML sign in from Tableau Desktop the flow reverts to the username/password or NTLM AuthN. 
 
 Unfortunately it requires a server restart so go get a cup of tea.
 
-![If I must.](../.gitbook/assets/image%20%2843%29.png)
+![Oh, ok.](../.gitbook/assets/image%20%2843%29.png)
 
 After the restart you will see that the login prompt has changed from being redirected to your SAML IdP, to the normal Tableau server prompt. You will then be able to sign in with your AD/LDAP credentials or Tableau Local username and password. 
 
@@ -190,15 +196,17 @@ After the restart you will see that the login prompt has changed from being redi
 
 ### Single Logout
 
-After logging on to the server I noticed I did not have option to sign out of Tableau. This feature is enabled by importing the SAML Single Logout \(SLO\) Endpoint as part of the OneLogin IdP metadata. However despite uploading the correct metadata it was not available:
+After logging on to the server I noticed I did not have option to sign out of Tableau. Tableau Server and Tableau Online supports Single Logout \(SLO\) for server-wide SAML \(only SP-initiated not IdP-initiated\). If you have configured Site SAML in Tableau Server neither SP or IdP-initiated are supported.
+
+This feature is enabled by importing the SAML SLO Endpoint as part of the OneLogin IdP metadata. However despite uploading the correct metadata it was not available:
 
 ![How can I sign out?](../.gitbook/assets/image%20%2841%29.png)
 
-Looking at the metadata XML below you can see there are different HTTP methods used for SLO and SSO, _redirect_ and _post_ respectively.
+Looking at the OneLogin metadata XML below you can see there are different HTTP methods defined for SLO and SSO, _redirect_ and _post_ respectively.
 
 ![HTTP Redirect](../.gitbook/assets/image%20%2840%29.png)
 
-As our [SAML Requirements](https://help.tableau.com/current/server/en-us/saml_requ.htm#xml_requirements) documentation states... ****_**HTTP POST**: Tableau Server accepts only HTTP POST requests for SAML communications. HTTP Redirect is not supported._ So this is never going to work with OneLogin.
+As our [SAML Requirements](https://help.tableau.com/current/server/en-us/saml_requ.htm#xml_requirements) documentation states... ****_**HTTP POST**: Tableau Server accepts only HTTP POST requests for SAML communications. HTTP Redirect is not supported._ Unfortunately this means SLO is not currently going to work with OneLogin.
 
 #### **How it should work:**
 
@@ -212,7 +220,7 @@ Getting Active Directory sync'ed up to OneLogin was surprisingly easy in my litt
 
 #### SAML
 
-If you setup Server Wide SAML then know that it means **all accounts** and you can't login with any other AuthN method. So, ensure all necessary accounts are sync'ed into your IdP \(such as admins\) or be ready to disable SAML for a workaround. Also, be aware of the lack of SLO currently in OneLogin for Tableau Server. 
+If you setup Server Wide SAML then know that it means **all accounts** and you can't login with any other AuthN method. So, ensure all necessary accounts are sync'ed into your IdP \(such as admins\) or be ready to disable SAML for a workaround. 
 
 #### **Single Logout**
 
