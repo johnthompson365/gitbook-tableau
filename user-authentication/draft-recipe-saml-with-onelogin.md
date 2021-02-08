@@ -117,13 +117,13 @@ I attempted both an IdP-initiated sign on and SP-initiated and got the same erro
 
 ### Troubleshooting
 
-I reset the password in OneLogin and checked that I could sign in. I checked the account in OneLogin and I made sure that I was 'Authenticated by' OneLogin and **not** Active Directory.
+I reset the password in OneLogin and checked that I could sign in. I checked the account in OneLogin and I made sure that I was 'Authenticated by' OneLogin and **not** Active Directory. If it was set to Active Directory I would have had to have used my AD username and password to sign in.
 
 ![](../.gitbook/assets/image%20%2822%29.png)
 
-In Tableau I wanted to check the usernames in the Identity Store. Weirdly, I couldn't find a way to do this, as I had enabled Server-Wide SAML and was automatically being redirected to the OneLogin portal for all authentication requests.
+In Tableau I wanted to check the usernames in the Identity Store. Weirdly, I couldn't find a simple way to do this, as I had enabled Server-Wide SAML and was automatically being redirected to the OneLogin portal for all authentication requests. I looked at using **tabcmd** but couldn't see an obvious cmd that just listed users \(maybe I missed something\). Also TSM doesn't contain user information it is only the higher-level server configuration that is managed from the portal. 
 
-So I looked at using **tabcmd** but couldn't see an obvious cmd that just listed users \(maybe I missed something\). Also TSM doesn't contain user information it is only the higher-level server configuration that is managed from the portal. I found these [instructions](https://kb.tableau.com/articles/howto/exporting-user-list) to access the Server Repository which is a PostgreSQL database. 
+I found these [instructions](https://kb.tableau.com/articles/howto/exporting-user-list) to access the Server Repository which is a PostgreSQL database. This is a lot of work but I found it useful to look at the underlying database. A quicker method with no server restart would be to connect via the [REST API](https://help.tableau.com/current/api/rest_api/en-us/REST/rest_api_get_started_tutorial_intro.htm) and get the information. 
 
 I had to ensure I had network access on port 8060 and run a tsm command first as explained [here](https://help.tableau.com/current/server/en-us/perf_collect_server_repo.htm).
 
@@ -136,8 +136,6 @@ I had to ensure I had network access on port 8060 and run a tsm command first as
 Once I had connected I could then browse the \_users table:
 
 ![The \_users table in all its glory](../.gitbook/assets/image%20%2837%29.png)
-
-Another method I could have used was to connect via the [REST API](https://help.tableau.com/current/api/rest_api/en-us/REST/rest_api_get_started_tutorial_intro.htm) and get the information.
 
 I checked I was passing the value in the Name column as the username attribute in SAML \(_adam.wally_\). This corresponds with the sAMAccountName shown at the top of the article in AD and mapped in OneLogin. I'm a big fan of [SAML-tracer for Firefox](https://addons.mozilla.org/en-US/firefox/addon/saml-tracer/) and Chrome. This showed I was passing the correct attribute:
 
