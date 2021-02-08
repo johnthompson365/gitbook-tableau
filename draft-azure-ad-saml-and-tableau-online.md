@@ -4,7 +4,7 @@ Microsoft provides an Azure AD that can be used to integrate Tableau Server and 
 
 ### TOL SAML Authentication
 
-There are articles to configure the authentication steps:
+There are articles to configure the authentication steps. The Microsoft ones are little simpler to follow as they have screenshots.
 
 **Tableau Docs:** [https://help.tableau.com/current/online/en-us/saml\_config\_azure\_ad.htm](https://help.tableau.com/current/online/en-us/saml_config_azure_ad.htm)  
 **Microsoft Docs:** [https://docs.microsoft.com/en-us/azure/active-directory/saas-apps/tableauonline-tutorial](https://docs.microsoft.com/en-us/azure/active-directory/saas-apps/tableauonline-tutorial)
