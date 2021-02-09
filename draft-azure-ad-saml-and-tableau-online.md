@@ -9,6 +9,26 @@ There are articles to configure the authentication steps. The Microsoft ones are
 **Tableau Docs:** [https://help.tableau.com/current/online/en-us/saml\_config\_azure\_ad.htm](https://help.tableau.com/current/online/en-us/saml_config_azure_ad.htm)  
 **Microsoft Docs:** [https://docs.microsoft.com/en-us/azure/active-directory/saas-apps/tableauonline-tutorial](https://docs.microsoft.com/en-us/azure/active-directory/saas-apps/tableauonline-tutorial)
 
+### 
+
+### Login
+
+[https://kb.tableau.com/articles/issue/prompted-to-enter-credentials-when-accessing-tableau-online-configured-with-saml](https://kb.tableau.com/articles/issue/prompted-to-enter-credentials-when-accessing-tableau-online-configured-with-saml)
+
+SP-initiated -   
+  
+Message: AADSTS50011: The reply URL specified in the request does not match the reply URLs configured for the application: '[https://sso.online.tableau.com/public/sp/metadata?alias=4e828bd1-](https://sso.online.tableau.com/public/sp/metadata?alias=4e828bd1-df88-4648-ab4e-743eadabed2a)xxx'.
+
+### Metadata
+
+Unlike Okta and OneLogin you can actually upload the metadata file to Azure AD.
+
+![](.gitbook/assets/image%20%2865%29.png)
+
+
+
+![](.gitbook/assets/image%20%2866%29.png)
+
 ### Attributes
 
 There are two main properties that TOL is interested in, your **Email** and **Display Name**:
@@ -45,4 +65,10 @@ So you can select either `givenname` + `surname` OR `displayname`
 [https://docs.microsoft.com/en-us/windows-server/identity/ad-fs/technical-reference/the-role-of-claims](https://docs.microsoft.com/en-us/windows-server/identity/ad-fs/technical-reference/the-role-of-claims) 
 
 ![](.gitbook/assets/image%20%2862%29.png)
+
+### User Experience
+
+The Azure AD Tableau Online app uses a SP-initiated flow. 
+
+So even if you publish the app in the MyApps portal it will still do an Authentication request rather than just send the Authentication response and provide seamless sign on.
 
