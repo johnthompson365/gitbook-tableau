@@ -16,8 +16,11 @@ Neither apps support **idp-initiated sign-on** which means even if you publish t
 
 There are articles to configure the authentication steps. The Microsoft ones are little simpler to follow as they have screenshots.
 
-**Tableau Docs:** [https://help.tableau.com/current/online/en-us/saml\_config\_azure\_ad.htm](https://help.tableau.com/current/online/en-us/saml_config_azure_ad.htm)  
-**Microsoft Docs:** [https://docs.microsoft.com/en-us/azure/active-directory/saas-apps/tableauonline-tutorial](https://docs.microsoft.com/en-us/azure/active-directory/saas-apps/tableauonline-tutorial)
+**Tableau Docs:**   
+[https://help.tableau.com/current/online/en-us/saml\_config\_azure\_ad.htm](https://help.tableau.com/current/online/en-us/saml_config_azure_ad.htm)  
+**Microsoft Docs:**  
+[Tutorial: Azure Active Directory single sign-on \(SSO\) integration with Tableau Online](https://docs.microsoft.com/en-us/azure/active-directory/saas-apps/tableauonline-tutorial)  
+[Tutorial: Azure Active Directory single sign-on \(SSO\) integration with Tableau Server](https://docs.microsoft.com/en-us/azure/active-directory/saas-apps/tableauserver-tutorial)
 
 ### 
 
