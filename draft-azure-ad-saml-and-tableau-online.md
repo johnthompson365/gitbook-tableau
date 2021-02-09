@@ -1,6 +1,16 @@
 # Draft: Azure AD SAML and Tableau Online
 
-Microsoft provides an Azure AD that can be used to integrate Tableau Server and Tableau Online into Azure AD. The main distinction between the two apps is that Tableau Online app allows you to do user provisioning as well as authentication.
+Microsoft provides an Azure AD app that can be used to simplify the integration between Tableau Server and Tableau Online and Azure AD. 
+
+### Features
+
+The two apps have a different feature set which you need to be aware of. The Tableau Online application supports the following three SAML features, whereas Tableau Server does not support user provisioning.
+
+1. SP-initiated SSO
+2. SP-Initiated Single Logout \(SLO\)
+3. **REST API user provisioning**
+
+Neither apps support **idp-initiated sign-on** which means even if you publish the app in the Azure MyApps portal it will still do an SP-initiated Authentication request and therefore not provide seamless sign on from the portal.
 
 ### TOL SAML Authentication
 
@@ -11,7 +21,7 @@ There are articles to configure the authentication steps. The Microsoft ones are
 
 ### 
 
-### Login
+### Login URL workaround
 
 [https://kb.tableau.com/articles/issue/prompted-to-enter-credentials-when-accessing-tableau-online-configured-with-saml](https://kb.tableau.com/articles/issue/prompted-to-enter-credentials-when-accessing-tableau-online-configured-with-saml)
 
@@ -70,5 +80,5 @@ So you can select either `givenname` + `surname` OR `displayname`
 
 The Azure AD Tableau Online app uses a SP-initiated flow. 
 
-So even if you publish the app in the MyApps portal it will still do an Authentication request rather than just send the Authentication response and provide seamless sign on.
+
 
