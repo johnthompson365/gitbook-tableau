@@ -1,50 +1,40 @@
-# Draft: Azure AD SAML and Tableau Online
+# Draft Recipe: Azure AD SAML and Tableau Online
 
-Microsoft provides an Azure AD app that can be used to simplify the integration between Tableau Server and Tableau Online and Azure AD. 
+### Scope
+
+Microsoft provides Azure AD apps that can be used to simplify the integration between Tableau Server and Tableau Online and Azure AD. The goal is to create a good onboarding and user experience to the Tableau services.
 
 ### Features
 
-The two apps have a different feature set which you need to be aware of. The Tableau Online application supports the following three SAML features, whereas Tableau Server does not support user provisioning.
+The two apps have a different feature sets. The Tableau Online application supports the following three features, whereas Tableau Server does not support user provisioning.
 
 1. SP-initiated SSO
 2. SP-Initiated Single Logout \(SLO\)
 3. **REST API user provisioning**
 
-Neither apps support **idp-initiated sign-on** which means even if you publish the app in the Azure MyApps portal it will still do an SP-initiated Authentication request and therefore not provide seamless sign on from the portal.
+Neither apps support [IdP-initiated sign-on](https://duo.com/blog/the-beer-drinkers-guide-to-saml). This means that if you publish the app in the Azure MyApps portal it will still do an SP-initiated Authentication request and therefore have the usual redirections in the browser for that flow.
 
-### TOL SAML Authentication
+### Documentation
 
 There are articles to configure the authentication steps. The Microsoft ones are little simpler to follow as they have screenshots.
 
-**Tableau Docs:**   
-[https://help.tableau.com/current/online/en-us/saml\_config\_azure\_ad.htm](https://help.tableau.com/current/online/en-us/saml_config_azure_ad.htm)  
 **Microsoft Docs:**  
 [Tutorial: Azure Active Directory single sign-on \(SSO\) integration with Tableau Online](https://docs.microsoft.com/en-us/azure/active-directory/saas-apps/tableauonline-tutorial)  
-[Tutorial: Azure Active Directory single sign-on \(SSO\) integration with Tableau Server](https://docs.microsoft.com/en-us/azure/active-directory/saas-apps/tableauserver-tutorial)
+[Tutorial: Azure Active Directory single sign-on \(SSO\) integration with Tableau Server](https://docs.microsoft.com/en-us/azure/active-directory/saas-apps/tableauserver-tutorial)  
+**Tableau Docs:**   
+[https://help.tableau.com/current/online/en-us/saml\_config\_azure\_ad.htm](https://help.tableau.com/current/online/en-us/saml_config_azure_ad.htm)
 
-### 
+### Attributes \(Tableau Online\)
 
-### 
-
-### Metadata
-
-Unlike Okta and OneLogin you can actually upload the metadata file to Azure AD.
-
-![](.gitbook/assets/image%20%2865%29.png)
-
-
-
-![](.gitbook/assets/image%20%2866%29.png)
-
-### Attributes
-
-There are two main properties that TOL is interested in, your **Email** and **Display Name**:
+There are two main properties that TOL is interested in, your **Email** and **Display Name**.  ****
 
 ![TOL Attribute Configuration](.gitbook/assets/image%20%2861%29.png)
 
 #### Email
 
-_Enter the name of the IdP assertion that contains the email address sent from the IdP to Tableau Online during the authentication process. The user is authenticated if the IdP email address is an exact match for the user's email address as stored in Tableau._
+_Enter the name of the IdP assertion that contains the email address sent from the IdP to Tableau Online during the authentication process. The user is authenticated if the IdP email address is an exact match for the user's email address as stored in Tableau._  
+  
+For a SAML site, the Full Name field is populated with the email address if the assertions for first and last name or full name are not provided in
 
 The guidance we give on the attributes to use has some nuance.
 
@@ -73,7 +63,9 @@ So you can select either `givenname` + `surname` OR `displayname`
 
 ![](.gitbook/assets/image%20%2862%29.png)
 
-### User Experience - TOL
+[Troubleshoot SAML](https://help.tableau.com/current/online/en-us/saml_trouble.htm)
+
+### User Experience - Tableau Online
 
 The Azure AD Tableau Online app always uses a SP-initiated flow. This means that the user experience involves a number of redirects. There are some configuration options that can smooth this experience.
 
