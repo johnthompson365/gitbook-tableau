@@ -4,8 +4,8 @@
 
 ## User Authentication
 
-* [Recipe: Integrating OneLogin with Tableau](user-authentication/recipe-onelogin-tableau.md)
-* [Tableau and the Okta SAML apps](user-authentication/tableau-okta-saml-apps.md)
+* [Recipe: OneLogin with Tableau](user-authentication/recipe-onelogin-tableau.md)
+* [Okta apps and Tableau](user-authentication/tableau-okta-saml-apps.md)
 
 ## DATA AUTHENTICATION
 
@@ -28,5 +28,5 @@
 
 ---
 
-* [Draft Recipe: Azure AD SAML and Tableau Online](draft-azure-ad-saml-and-tableau-online.md)
+* [Draft: Azure AD and Tableau](draft-azure-ad-saml-and-tableau-online.md)
 

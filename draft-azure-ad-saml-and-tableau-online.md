@@ -1,4 +1,4 @@
-# Draft Recipe: Azure AD SAML and Tableau Online
+# Draft: Azure AD and Tableau
 
 ### Scope
 
@@ -22,19 +22,32 @@ There are articles to configure the authentication steps. The Microsoft ones are
 [Tutorial: Azure Active Directory single sign-on \(SSO\) integration with Tableau Online](https://docs.microsoft.com/en-us/azure/active-directory/saas-apps/tableauonline-tutorial)  
 [Tutorial: Azure Active Directory single sign-on \(SSO\) integration with Tableau Server](https://docs.microsoft.com/en-us/azure/active-directory/saas-apps/tableauserver-tutorial)  
 **Tableau Docs:**   
-[https://help.tableau.com/current/online/en-us/saml\_config\_azure\_ad.htm](https://help.tableau.com/current/online/en-us/saml_config_azure_ad.htm)
+[Configure SAML with Azure Active Directory](https://help.tableau.com/current/online/en-us/saml_config_azure_ad.htm) \(Tableau Online\)  
+[Configure Server-Wide SAML](https://help.tableau.com/current/server/en-us/config_saml.htm) \(Tableau Server\)
 
-### Attributes \(Tableau Online\)
+### SAML Attributes
 
-There are two main properties that TOL is interested in, your **Email** and **Display Name**.  ****
+As part of the SAML authentication flow attributes are passed as assertions between the IdP \(Azure\) and the Service Provider \(Tableau\). Getting them right is key to a successful SSO. 
+
+#### Tableau Online
+
+There are two main properties that TOL is interested in, your **Email** and **Display Name**. The Email attribute is mapped to the username in Tableau Online and must match a licensed user stored in the Tableau Server Repository. ****The Display Name maps to the Full Name field in Tableau Online, it is populated with the assertions for **First name** and **Last name** or **Full name**. ****If they are not provided in the AuthN flow then the email address is used.
+
+![](.gitbook/assets/image%20%2868%29.png)
 
 ![TOL Attribute Configuration](.gitbook/assets/image%20%2861%29.png)
 
-#### Email
+#### Claims
 
-_Enter the name of the IdP assertion that contains the email address sent from the IdP to Tableau Online during the authentication process. The user is authenticated if the IdP email address is an exact match for the user's email address as stored in Tableau._  
-  
-For a SAML site, the Full Name field is populated with the email address if the assertions for first and last name or full name are not provided in
+[How to: customize claims issued in the SAML token for enterprise applications](https://docs.microsoft.com/en-us/azure/active-directory/develop/active-directory-saml-claims-customization)
+
+![](.gitbook/assets/image%20%2863%29.png)
+
+
+
+#### 
+
+#### Email  __
 
 The guidance we give on the attributes to use has some nuance.
 
@@ -50,14 +63,6 @@ The guidance we give on the attributes to use has some nuance.
 * `http://schemas.microsoft.com/identity/claims/displayname`
 
 So you can select either `givenname` + `surname` OR `displayname`
-
-  
-  
-
-
-#### Azure AD Claims
-
-![](.gitbook/assets/image%20%2863%29.png)
 
 [https://docs.microsoft.com/en-us/windows-server/identity/ad-fs/technical-reference/the-role-of-claims](https://docs.microsoft.com/en-us/windows-server/identity/ad-fs/technical-reference/the-role-of-claims) 
 

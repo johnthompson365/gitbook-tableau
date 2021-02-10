@@ -2,7 +2,7 @@
 description: '1 cup of OneLogin, 1/2 cup of Tableau, Tablespoon of SAML and a pinch of AD.'
 ---
 
-# Recipe: Integrating OneLogin with Tableau
+# Recipe: OneLogin with Tableau
 
 ### Scope
 
