@@ -22,7 +22,7 @@ The approach I am taking with Gitbook is to use this as my note taker and blog. 
 
 #### Recipes
 
-A structured way to make you successful with a solution.
+A structured way to make you successful with a solution. Step by step and all the fun along the way.
 
 #### Notes 
 
@@ -30,7 +30,7 @@ If the article has a _Notes_ prefix, it is intended as just that; quick notes on
 
 #### Drafts
 
-You know it'll be rough and ready or incomplete at best! 
+You know it'll be rough and ready, or incomplete at best! 
 
 NB. "Welcome friends" is lovingly appropriated from [@shanselman](https://twitter.com/shanselman)
 
