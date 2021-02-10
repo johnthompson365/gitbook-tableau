@@ -14,7 +14,7 @@ I work for Tableau as a Strategic Solution Engineer, and specialise in Security,
 
 These docs are not official Tableau content, and don't represent the views of my employer. 
 
-If there are errors or areas for improvement or suggestions for content please raise an issue on GitHub.
+If there are errors or areas for improvement or suggestions for content please raise an issue on [GitHub](https://github.com/johnthompson365/gitbook-tableau), or _Edit on Github_ yourself using the link on the page and raise a PR.
 
 ### Content
 
