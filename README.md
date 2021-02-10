@@ -18,7 +18,7 @@ If there are errors or areas for improvement or suggestions for content please r
 
 ### Content
 
-The approach I am taking with Gitbook is to use this as my note taker and blog. I just wanted to stop the barrier to publishing that is 'perfect'. Also, I thought it would be useful for a bit of transparency in the process of learning and writing a recipe.
+The approach I am taking with Gitbook is to use this as my note taker and blog. I just wanted to stop the barrier to publishing that is 'perfect'. Also, I thought it would be useful for a bit of transparency in the process of learning and writing the docs.
 
 #### Recipes
 
