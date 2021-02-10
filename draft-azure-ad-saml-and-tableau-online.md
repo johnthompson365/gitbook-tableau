@@ -24,13 +24,7 @@ There are articles to configure the authentication steps. The Microsoft ones are
 
 ### 
 
-### Login URL workaround
-
-[https://kb.tableau.com/articles/issue/prompted-to-enter-credentials-when-accessing-tableau-online-configured-with-saml](https://kb.tableau.com/articles/issue/prompted-to-enter-credentials-when-accessing-tableau-online-configured-with-saml)
-
-SP-initiated -   
-  
-Message: AADSTS50011: The reply URL specified in the request does not match the reply URLs configured for the application: '[https://sso.online.tableau.com/public/sp/metadata?alias=4e828bd1-](https://sso.online.tableau.com/public/sp/metadata?alias=4e828bd1-df88-4648-ab4e-743eadabed2a)xxx'.
+### 
 
 ### Metadata
 
@@ -79,9 +73,27 @@ So you can select either `givenname` + `surname` OR `displayname`
 
 ![](.gitbook/assets/image%20%2862%29.png)
 
-### User Experience
+### User Experience - TOL
 
-The Azure AD Tableau Online app uses a SP-initiated flow. 
+The Azure AD Tableau Online app always uses a SP-initiated flow. This means that the user experience involves a number of redirects. There are some configuration options that can smooth this experience.
+
+#### Remember me
+
+You should advise your users to always check the **Remember me** option when signing in to TOL. Without this checked the SAML flow will take the user back to the initial TOL SSO page to input the username before redirecting to the IdP.   
+  
+
+
+![](.gitbook/assets/image%20%2867%29.png)
+
+If you select 'Remember me'  
+  
+Login URL workaround
+
+[https://kb.tableau.com/articles/issue/prompted-to-enter-credentials-when-accessing-tableau-online-configured-with-saml](https://kb.tableau.com/articles/issue/prompted-to-enter-credentials-when-accessing-tableau-online-configured-with-saml)
+
+SP-initiated -   
+  
+Message: AADSTS50011: The reply URL specified in the request does not match the reply URLs configured for the application: '[https://sso.online.tableau.com/public/sp/metadata?alias=4e828bd1-](https://sso.online.tableau.com/public/sp/metadata?alias=4e828bd1-df88-4648-ab4e-743eadabed2a)xxx'.
 
 
 

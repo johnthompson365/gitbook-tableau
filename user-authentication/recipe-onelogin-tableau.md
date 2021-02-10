@@ -4,6 +4,8 @@ description: '1 cup of OneLogin, 1/2 cup of Tableau, Tablespoon of SAML and a pi
 
 # Recipe: Integrating OneLogin with Tableau
 
+### Scope
+
 My goal is to setup OneLogin as the Identity Provider for Tableau Server. I want to synchronise users from Active Directory to Tableau and OneLogin;  then use those accounts to sign in with SAML to Tableau. Simple, right?
 
 ### OneLogin Developer Tenant

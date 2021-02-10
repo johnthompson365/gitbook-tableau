@@ -4,26 +4,26 @@ description: Here is what I learned when testing out Tableau Online SAML with Ok
 
 # Tableau and the Okta SAML apps
 
-## **Scope**
+### **Scope**
 
 The testing focuses on the integrations between Tableau Online and Okta for SAML authentication. This is the core SAML authentication functionality to get a user securely logged on, not advanced configuration or user provisioning.
 
-### **Okta Applications**
+### **Okta Application Features**
 
-There are two published apps in the [Okta Integration Network \(OIN\)](https://help.okta.com/en/prod/Content/Topics/Apps/Apps_Apps.htm). One for Tableau Online \(TOL\) and the other for Tableau Server. They have a different SAML feature set which you need to be aware of. The Okta Tableau Online application supports the following three SAML features.
+There are two published apps in the [Okta Integration Network \(OIN\)](https://help.okta.com/en/prod/Content/Topics/Apps/Apps_Apps.htm). One for Tableau Online \(TOL\) and the other for Tableau Server. They have a different SAML feature set which you need to be aware of. The Okta Tableau Online application supports the following three SAML features; and it is not just authentication the TOL app provides but also it has [SCIM for user provisioning](https://help.tableau.com/current/online/en-us/scim_config_online.htm).
 
 1. SP-initiated SSO
 2. IdP-initiated SSO
 3. SP-Initiated Single Logout \(SLO\)
 4. **SCIM user provisioning**
 
-It is not just authentication the TOL app provides but also it has [SCIM for user provisioning](https://help.tableau.com/current/online/en-us/scim_config_online.htm).
-
 The Tableau Server Okta App supports the same features **apart** from SCIM. Also note neither apps support [IdP-initiated SLO](https://blog.bio-key.com/2016/06/20/saml-single-logout-need-to-know)_._
 
 #### Okta Developer Tenant
 
-Sign up for an Okta Developer Tenant. The tenant is permanent and will allow you to test out all the features you need: [https://developer.okta.com/signup/](https://developer.okta.com/signup/)
+Sign up for an Okta Developer Tenant. The tenant is permanent and will allow you to test out all the features you need: 
+
+{% embed url="https://developer.okta.com/signup/" caption="Free stuff, use it." %}
 
 ### **Documentation**
 
