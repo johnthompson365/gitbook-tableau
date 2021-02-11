@@ -47,7 +47,7 @@ There are two main properties that TOL is interested in, your **Email** and **Di
 
 #### 
 
-#### Email  __
+#### Email
 
 The guidance we give on the attributes to use has some nuance.
 
@@ -55,6 +55,10 @@ The guidance we give on the attributes to use has some nuance.
 * If all accounts are sourced from **Microsoft Azure Active Directory**, use the following value:
 
   `http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name`.
+
+I am primarily interested in Enterprise organizations so consumer accounts are less of a consideration. In Azure AD and Microsoft 365 the `userPrincipalName` \(UPN\) is king. This is the attribute that is used to sign in to services even though sometimes it asked for email address it really meant UPN! Many organizations are likely to want to map that to the username in TOL.  You can choose to map `mail` or`userPrincipalName` as the username in TOL. However as there isn't a separate email address attribute in TOL whatever is defined as username must be a working email address as that value is what will be used to send out the subscriptions you have setup to views or workbooks.
+
+![](.gitbook/assets/image%20%2869%29.png)
 
 **Display Name:** Enter an assertion name for either the first name and last name, or for the full name, depending on how the IdP stores this information. Tableau Online uses these attributes to set the display name.
 
@@ -92,5 +96,11 @@ SP-initiated -
   
 Message: AADSTS50011: The reply URL specified in the request does not match the reply URLs configured for the application: '[https://sso.online.tableau.com/public/sp/metadata?alias=4e828bd1-](https://sso.online.tableau.com/public/sp/metadata?alias=4e828bd1-df88-4648-ab4e-743eadabed2a)xxx'.
 
+### User provisioning
 
+{% embed url="https://docs.microsoft.com/en-us/azure/active-directory/saas-apps/tableau-online-provisioning-tutorial" caption="Follow this." %}
+
+In the context of automatic user provisioning, only the users or groups that were assigned to an application in Azure AD are synchronized.
+
+![](.gitbook/assets/image%20%2870%29.png)
 
