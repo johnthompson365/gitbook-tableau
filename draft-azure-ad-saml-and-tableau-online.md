@@ -102,5 +102,5 @@ Message: AADSTS50011: The reply URL specified in the request does not match the 
 
 In the context of automatic user provisioning, only the users or groups that were assigned to an application in Azure AD are synchronized.
 
-![](.gitbook/assets/image%20%2870%29.png)
+![](.gitbook/assets/image%20%2871%29.png)
 
