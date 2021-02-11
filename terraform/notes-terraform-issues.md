@@ -71,6 +71,37 @@ description: Tracker
       <td
       style="text-align:left"></td>
     </tr>
+    <tr>
+      <td style="text-align:left">Vault again</td>
+      <td style="text-align:left">Message=&quot;The vault name &apos;xxx&apos; is already in use. Vault
+        names are globaly unique so it is possible that the name is already taken.
+        If you are sure that the vault name was not taken then it is possible that
+        a vault with the same name was recently deleted but not purged after being
+        placed in a recoverable state. If the vault is in a recoverable state then
+        the vault will need to be purged before reusing the name.</td>
+      <td style="text-align:left">
+        <p>I had not deleted the vault in my other subscription. There need to be
+          some creative vault names if they are globally unique!</p>
+        <p></p>
+        <p>I changed the name and it worked. Nice.</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="text-align:left"></td>
+      <td style="text-align:left">
+        <p>Error checking for presence of existing Certificate</p>
+        <p>keyvault.BaseClient#GetCertificate: Failure responding to request: StatusCode=403</p>
+        <p>does not have certificates get permission on key vault</p>
+      </td>
+      <td style="text-align:left"></td>
+    </tr>
+    <tr>
+      <td style="text-align:left"></td>
+      <td style="text-align:left">Error: Cycle: azurerm_key_vault_access_policy.vm, azurerm_key_vault_certificate.winrm_certificate,
+        azurerm_windows_virtual_machine.windows_vm</td>
+      <td style="text-align:left"><a href="https://serverfault.com/questions/1005761/what-does-error-cycle-means-in-terraform">https://serverfault.com/questions/1005761/what-does-error-cycle-means-in-terraform</a>
+      </td>
+    </tr>
   </tbody>
 </table>
 
