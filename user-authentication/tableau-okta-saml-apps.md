@@ -29,10 +29,10 @@ Sign up for an Okta Developer Tenant. The tenant is permanent and will allow you
 
 I don't want to duplicate setup instructions here as Okta and Tableau docs do a good job. To be honest I found the Okta instructions better than the Tableau Online ones as they had screenshots. However the Okta Tableau Server ones look out of date.
 
-**Okta Resources: Setup**  
+**Okta Setup Resources:**   
 [How to Configure SAML 2.0 for Tableau Online](https://saml-doc.okta.com/SAML_Docs/How-to-Configure-SAML-2.0-for-Tableau-Online.html)  
 [How to Configure SAML 2.0 for Tableau Server](https://saml-doc.okta.com/SAML_Docs/How-to-Configure-SAML-2.0-for-Tableau-Server.html) -&gt; _this has out of date screenshots - pre-TSM_  
-**Tableau Resources: Setup**  
+**Tableau Setup Resources:**   
 [Configure SAML with Okta](https://help.tableau.com/current/online/en-us/saml_config_okta.htm) - Tableau Online  
 [SAML](https://help.tableau.com/current/server/en-us/saml.htm) - Tableau Server general SAML guidance
 
