@@ -1,10 +1,10 @@
 # Draft: Azure AD and Tableau
 
-### Scope
+## Scope
 
 Microsoft provides Azure AD apps that can be used to simplify the integration between Tableau Server and Tableau Online and Azure AD. The goal is to create a good onboarding and user experience to the Tableau services.
 
-### Features
+## Features
 
 The two apps have a different feature sets. The Tableau Online application supports the following three features, whereas Tableau Server does not support user provisioning.
 
@@ -14,7 +14,7 @@ The two apps have a different feature sets. The Tableau Online application suppo
 
 Neither apps support [IdP-initiated sign-on](https://duo.com/blog/the-beer-drinkers-guide-to-saml). This means that if you publish the app in the Azure MyApps portal it will still do an SP-initiated Authentication request and therefore have the usual browser redirections for that flow.
 
-### Documentation
+## Documentation
 
 There are articles to configure the authentication steps. The Microsoft ones are little simpler to follow as they have screenshots.
 
@@ -25,30 +25,23 @@ There are articles to configure the authentication steps. The Microsoft ones are
 [Configure SAML with Azure Active Directory](https://help.tableau.com/current/online/en-us/saml_config_azure_ad.htm) \(Tableau Online\)  
 [Configure Server-Wide SAML](https://help.tableau.com/current/server/en-us/config_saml.htm) \(Tableau Server\)
 
-### SAML Attributes
+## SAML Attributes
 
 As part of the SAML authentication flow attributes are passed between the IdP \(Azure\) and the Service Provider \(Tableau\). Getting them right is key to a successful SSO. 
 
-#### Tableau Online
+### Tableau Online
 
-There are two main properties that TOL is interested in, your **Email** and **Display Name**. The Email attribute is mapped to the username in Tableau Online and must match a licensed user stored in the Tableau Server Repository. ****The Display Name maps to the Full Name field in Tableau Online, it is populated with the assertions for **First name** and **Last name** or **Full name**. ****If they are not provided in the AuthN flow then the email address is used, so are actually optional.
+There are two main properties that TOL is interested in, your **Email** and **Display Name**. The Email attribute is mapped to the username in Tableau Online and must match a licensed user stored in the Tableau Server Repository. ****The Display Name maps to the Full Name field in Tableau Online, it is populated with the assertions for **First name** and **Last name** or **Full name**. ****If they are not provided in the authN flow then the email address is used, so are actually optional.
 
 ![](.gitbook/assets/image%20%2868%29.png)
 
 ![TOL Attribute Configuration](.gitbook/assets/image%20%2861%29.png)
 
-#### Claims
+### Claims
 
-Claims are information about user and groups that are shared between the identity provider and the service provider in the SAML token. In the SAML token they are usually contained in the Attribute Statement. The claims are often used for authorization to the service.
+Claims are widely referred to in Azure AD but not really in other major IdP's like Okta or OneLogin as they just refer to attributes. Claims seem to be a bit of a hangover from the ADFS days. Claims are information about user and groups that are shared between the identity provider and the service provider in the SAML token. In the SAML token they are usually contained in the Attribute Statement, so you only really need to consider them as attributes. A claim type provides context for the claim value. It is usually expressed as a Uniform Resource Identifier \(URI\). This URI is what is required to be put into the TOL configuration.
 
-A claim type provides context for the claim value. It is usually expressed as a Uniform Resource Identifier \(URI\).  
-  
-
-
-![](.gitbook/assets/image%20%2863%29.png)
-
-[SAML Token Claims Reference](https://docs.microsoft.com/en-us/azure/active-directory/develop/reference-saml-tokens)   
-[How to: customize claims issued in the SAML token for enterprise applications](https://docs.microsoft.com/en-us/azure/active-directory/develop/active-directory-saml-claims-customization)
+[SAML Token Claims Reference](https://docs.microsoft.com/en-us/azure/active-directory/develop/reference-saml-tokens) 
 
 <table>
   <thead>
@@ -101,20 +94,42 @@ A claim type provides context for the claim value. It is usually expressed as a 
   </tbody>
 </table>
 
-#### 
+### Email
 
-#### Email
-
-The guidance we give on the attributes to use has some nuance.
+The guidance we give on the attributes to use has a couple of options:
 
 * If all accounts you’re giving access to are sourced from **Microsoft accounts** \(e.g. outlook.com/gmail.com, or any consumer email domain that has signed up for an account\) this will be: `http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress`
 * If all accounts are sourced from **Microsoft Azure Active Directory**, use the following value:
 
   `http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name`.
 
+### The Minimum!
+
+I spent some time playing around trying to find the minimal configuration required with the attributes and claims**.** As it states in Azure, the required claim is actually the Name ID. So I deleted all other for Name, Given Name etc. 
+
+![](.gitbook/assets/image%20%2874%29.png)
+
+The identifier format is email address and in this instance I have mapped it to the Source Attribute of userPrincipalName in the directory \(more information: [How to: customize claims issued in the SAML token for enterprise applications](https://docs.microsoft.com/en-us/azure/active-directory/develop/active-directory-saml-claims-customization)\).
+
+![](.gitbook/assets/image%20%2872%29.png)
+
+  
+When logging on I received an error logging in:  
+  
+_The site is configured to use the "_[_http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name_](http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name)_" attribute as the username. Login failed because this is not included in the IdP Response. To fix this problem, the site admin must either choose the correct attribute or clear it to rely on the NameID._  
+  
+By deleting the '/name' claim URI from the setting in Tableau Online it forces SAML to rely on the Name ID in the response. 
+
+![](.gitbook/assets/image%20%2875%29.png)
+
+You can then login successfully by only relying on the name identifier.  
+
+
+### The Recommended!
+
 I am primarily interested in Enterprise organizations so consumer accounts are less of a consideration. In Azure AD and Microsoft 365 the `userPrincipalName` \(UPN\) is king. This is the attribute that is used to sign in to services even though sometimes it asked for email address it really meant UPN! Many organizations are likely to want to map that to the username in TOL.  You can choose to map `mail` or`userPrincipalName` as the username in TOL. However as there isn't a separate email address attribute in TOL whatever is defined as username must be a working email address as that value is what will be used to send out the subscriptions you have setup to views or workbooks.
 
-![](.gitbook/assets/image%20%2869%29.png)
+![Workbook subscriptions](.gitbook/assets/image%20%2869%29.png)
 
 **Display Name:** Enter an assertion name for either the first name and last name, or for the full name, depending on how the IdP stores this information. Tableau Online uses these attributes to set the display name.
 
@@ -129,6 +144,8 @@ So you can select either `givenname` + `surname` OR `displayname`
 ![](.gitbook/assets/image%20%2862%29.png)
 
 [Troubleshoot SAML](https://help.tableau.com/current/online/en-us/saml_trouble.htm)
+
+
 
 ### User Experience - Tableau Online
 
