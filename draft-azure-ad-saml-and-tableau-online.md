@@ -147,7 +147,7 @@ So you can select either `givenname` + `surname` OR `displayname`
 
 
 
-### User Experience - Tableau Online
+## User Experience - Tableau Online
 
 The Azure AD Tableau Online app always uses a SP-initiated flow. This means that the user experience involves a number of redirects. There are some configuration options that can smooth this experience.
 
@@ -169,7 +169,7 @@ SP-initiated -
   
 Message: AADSTS50011: The reply URL specified in the request does not match the reply URLs configured for the application: '[https://sso.online.tableau.com/public/sp/metadata?alias=4e828bd1-](https://sso.online.tableau.com/public/sp/metadata?alias=4e828bd1-df88-4648-ab4e-743eadabed2a)xxx'.
 
-### User provisioning
+## User provisioning
 
 {% embed url="https://docs.microsoft.com/en-us/azure/active-directory/saas-apps/tableau-online-provisioning-tutorial" caption="Follow this." %}
 
