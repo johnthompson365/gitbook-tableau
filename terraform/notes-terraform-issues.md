@@ -102,6 +102,12 @@ description: Tracker
       <td style="text-align:left"><a href="https://serverfault.com/questions/1005761/what-does-error-cycle-means-in-terraform">https://serverfault.com/questions/1005761/what-does-error-cycle-means-in-terraform</a>
       </td>
     </tr>
+    <tr>
+      <td style="text-align:left"></td>
+      <td style="text-align:left">Error: Error ensuring Resource Providers are registered.</td>
+      <td style="text-align:left"><a href="https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_provider_registration">https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_provider_registration</a>
+      </td>
+    </tr>
   </tbody>
 </table>
 
