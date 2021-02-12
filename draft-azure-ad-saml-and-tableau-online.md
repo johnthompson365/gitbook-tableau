@@ -12,7 +12,7 @@ The two apps have a different feature sets. The Tableau Online application suppo
 2. SP-Initiated Single Logout \(SLO\)
 3. **REST API user provisioning**
 
-Neither apps support [IdP-initiated sign-on](https://duo.com/blog/the-beer-drinkers-guide-to-saml). This means that if you publish the app in the Azure MyApps portal it will still do an SP-initiated Authentication request and therefore have the usual redirections in the browser for that flow.
+Neither apps support [IdP-initiated sign-on](https://duo.com/blog/the-beer-drinkers-guide-to-saml). This means that if you publish the app in the Azure MyApps portal it will still do an SP-initiated Authentication request and therefore have the usual browser redirections for that flow.
 
 ### Documentation
 
@@ -27,11 +27,11 @@ There are articles to configure the authentication steps. The Microsoft ones are
 
 ### SAML Attributes
 
-As part of the SAML authentication flow attributes are passed as assertions between the IdP \(Azure\) and the Service Provider \(Tableau\). Getting them right is key to a successful SSO. 
+As part of the SAML authentication flow attributes are passed between the IdP \(Azure\) and the Service Provider \(Tableau\). Getting them right is key to a successful SSO. 
 
 #### Tableau Online
 
-There are two main properties that TOL is interested in, your **Email** and **Display Name**. The Email attribute is mapped to the username in Tableau Online and must match a licensed user stored in the Tableau Server Repository. ****The Display Name maps to the Full Name field in Tableau Online, it is populated with the assertions for **First name** and **Last name** or **Full name**. ****If they are not provided in the AuthN flow then the email address is used.
+There are two main properties that TOL is interested in, your **Email** and **Display Name**. The Email attribute is mapped to the username in Tableau Online and must match a licensed user stored in the Tableau Server Repository. ****The Display Name maps to the Full Name field in Tableau Online, it is populated with the assertions for **First name** and **Last name** or **Full name**. ****If they are not provided in the AuthN flow then the email address is used, so are actually optional.
 
 ![](.gitbook/assets/image%20%2868%29.png)
 
@@ -39,11 +39,67 @@ There are two main properties that TOL is interested in, your **Email** and **Di
 
 #### Claims
 
-[How to: customize claims issued in the SAML token for enterprise applications](https://docs.microsoft.com/en-us/azure/active-directory/develop/active-directory-saml-claims-customization)
+Claims are information about user and groups that are shared between the identity provider and the service provider in the SAML token. In the SAML token they are usually contained in the Attribute Statement. The claims are often used for authorization to the service.
+
+A claim type provides context for the claim value. It is usually expressed as a Uniform Resource Identifier \(URI\).  
+  
+
 
 ![](.gitbook/assets/image%20%2863%29.png)
 
+[SAML Token Claims Reference](https://docs.microsoft.com/en-us/azure/active-directory/develop/reference-saml-tokens)   
+[How to: customize claims issued in the SAML token for enterprise applications](https://docs.microsoft.com/en-us/azure/active-directory/develop/active-directory-saml-claims-customization)
 
+<table>
+  <thead>
+    <tr>
+      <th style="text-align:left">Name</th>
+      <th style="text-align:left">Description</th>
+      <th style="text-align:left">Type</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align:left">Name</td>
+      <td style="text-align:left">Contains a unique identifier of an object in Azure AD. This value is immutable
+        and cannot be reassigned or reused. Use the object ID to identify an object
+        in queries to Azure AD.</td>
+      <td style="text-align:left">
+        <p><code>&lt;Attribute Name=&quot;http://schemas.</code>
+        </p>
+        <p><code>microsoft.com/identity/claims/objectidentifier&quot;&gt;</code>
+          <br
+          /><code>&lt;AttributeValue&gt;528b2ac2-aa9c-45e1-88d4-959b53bc7dd0&lt;AttributeValue&gt;</code>
+        </p>
+      </td>
+    </tr>
+    <tr>
+      <td style="text-align:left">First Name</td>
+      <td style="text-align:left">Provides the first or &quot;given&quot; name of the user, as set on the
+        Azure AD user object.</td>
+      <td style="text-align:left">
+        <p><code>&lt;Attribute Name=&quot;http://schemas.</code>
+        </p>
+        <p><code>xmlsoap.org/ws/2005/05/identity/claims/givenname&quot;&gt;</code>
+          <br
+          /><code>&lt;AttributeValue&gt;Frank&lt;AttributeValue</code>
+        </p>
+      </td>
+    </tr>
+    <tr>
+      <td style="text-align:left">Last Name</td>
+      <td style="text-align:left">Provides the last name, surname, or family name of the user as defined
+        in the Azure AD user object.</td>
+      <td style="text-align:left">
+        <p><code>&lt;Attribute Name=&quot; http://schemas.xmlsoap.</code>
+        </p>
+        <p><code>org/ws/2005/05/identity/claims/surname&quot;&gt;</code>
+          <br /><code>&lt;AttributeValue&gt;Miller&lt;AttributeValue&gt;</code>
+        </p>
+      </td>
+    </tr>
+  </tbody>
+</table>
 
 #### 
 
