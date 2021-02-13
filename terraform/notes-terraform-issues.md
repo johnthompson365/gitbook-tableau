@@ -4,6 +4,8 @@ description: Tracker
 
 # Terraform Issues
 
+I'm not saying key vaults are tricky but....
+
 <table>
   <thead>
     <tr>
@@ -107,6 +109,44 @@ description: Tracker
       <td style="text-align:left">Error: Error ensuring Resource Providers are registered.</td>
       <td style="text-align:left"><a href="https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_provider_registration">https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_provider_registration</a>
       </td>
+    </tr>
+    <tr>
+      <td style="text-align:left"></td>
+      <td style="text-align:left">Error: waiting for creation of Windows Virtual Machine &quot;TABWIN-TFVM&quot;
+        (Resource Group &quot;TABWIN-TFrg&quot;): Code=&quot;KeyVaultAccessForbidden&quot;
+        Message=&quot;Key Vault <a href="https://tabwinkv-jt365tb01.vault.azure.net/secrets/winrm-TABWIN-cert/58a87f1a91284a49a0bd6600f80a21b9">https://tabwinkv-jt365tb01.vault.azure.net/secrets/winrm-TABWIN-</a>either
+        has not been enabled for deployment or the vault id provided, /subscriptions/x/resourceGroups/TABWIN-TFrg/providers/Microsoft.KeyVault/vaults/tabwinkv-jt365tb01,
+        does not match the Key Vault&apos;s true resource id.&quot;</td>
+      <td style="text-align:left">enabled_for_deployment = true</td>
+    </tr>
+    <tr>
+      <td style="text-align:left"></td>
+      <td style="text-align:left">Error: A resource with the ID &quot;/subscriptions/x/resourceGroups/TABWIN-TFrg/providers/Microsoft.Compute/virtualMachines/TABWIN-TFVM&quot;
+        already exists - to be managed via Terraform this resource needs to be
+        imported into the State. Please see the resource documentation for &quot;azurerm_windows_virtual_machine&quot;
+        for more information.</td>
+      <td style="text-align:left">terraform destroy</td>
+    </tr>
+    <tr>
+      <td style="text-align:left"></td>
+      <td style="text-align:left">already exists - to be managed via Terraform this resource needs to be
+        imported into the State</td>
+      <td style="text-align:left">
+        <p>terraform import azurerm_windows_virtual_machine.windows_vm /subscriptions/x/resourceGroups/TABWIN-TFrg/providers/Microsoft.Compute/virtualMachines/TABWIN-TFVM</p>
+        <p></p>
+        <p>terraform destroy</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="text-align:left"></td>
+      <td style="text-align:left">Error: creating Windows Virtual Machine &quot;TABWIN-TFVM&quot; (Resource
+        Group &quot;TABWIN-TFrg&quot;): compute.VirtualMachinesClient#CreateOrUpdate:
+        Failure sending request: StatusCode=0 -- Original Error: autorest/azure:
+        Service returned an error. Status= Code=&quot;ConflictingUserInput&quot;
+        Message=&quot;Disk TABWIN-OsDisk already exists in resource group TABWIN-TFRG.
+        Only CreateOption.Attach is supported.&quot; Target=&quot;/subscriptions/x/resourceGroups/TABWIN-TFrg/providers/Microsoft.Compute/disks/TABWIN-OsDisk&quot;</td>
+      <td
+      style="text-align:left"></td>
     </tr>
   </tbody>
 </table>
