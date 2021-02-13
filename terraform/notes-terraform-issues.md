@@ -34,8 +34,8 @@ I'm not saying key vaults are tricky but....
       <td style="text-align:left">Error: purging Certificate &quot;winrm-TABWIN-cert&quot; keyvault.BaseClient#PurgeDeletedCertificate:
         Failure responding to request: StatusCode=403 -- Original Error: autorest/azure:
         Service returned an error. Status=403 Code=&quot;Forbidden&quot; Message=&quot;The
-        user, group or application &apos;appid=04b07795-&apos;xxx does not have
-        certificates purge permission on key vault &apos;tabwin&apos;</td>
+        user, group or application &apos;appid=xxx-xxx does not have certificates
+        purge permission on key vault &apos;tabwin&apos;</td>
       <td style="text-align:left">
         <p><b>To be tested</b>
         </p>
