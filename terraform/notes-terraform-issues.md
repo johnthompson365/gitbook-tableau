@@ -139,14 +139,12 @@ I'm not saying key vaults are tricky but....
     </tr>
     <tr>
       <td style="text-align:left"></td>
-      <td style="text-align:left">Error: creating Windows Virtual Machine &quot;TABWIN-TFVM&quot; (Resource
-        Group &quot;TABWIN-TFrg&quot;): compute.VirtualMachinesClient#CreateOrUpdate:
+      <td style="text-align:left">Error: creating Windows Virtual Machine &quot;TABWIN-TFVM&quot;.VirtualMachinesClient#CreateOrUpdate:
         Failure sending request: StatusCode=0 -- Original Error: autorest/azure:
         Service returned an error. Status= Code=&quot;ConflictingUserInput&quot;
         Message=&quot;Disk TABWIN-OsDisk already exists in resource group TABWIN-TFRG.
-        Only CreateOption.Attach is supported.&quot; Target=&quot;/subscriptions/x/resourceGroups/TABWIN-TFrg/providers/Microsoft.Compute/disks/TABWIN-OsDisk&quot;</td>
-      <td
-      style="text-align:left"></td>
+        Only CreateOption.Attach is supported.&quot;</td>
+      <td style="text-align:left">Used Terraform import again</td>
     </tr>
   </tbody>
 </table>
