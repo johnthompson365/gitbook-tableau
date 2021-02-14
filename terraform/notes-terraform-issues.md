@@ -62,18 +62,6 @@ I'm not saying key vaults are tricky but....
       </td>
     </tr>
     <tr>
-      <td style="text-align:left"></td>
-      <td style="text-align:left">Error: purging Certificate &quot;winrm-ADFS-cert&quot; (Key Vault &quot;
-        <a
-        href="https://tabwinkv.vault.azure.net/">https://tabwin/</a>&quot;): keyvault.BaseClient#PurgeDeletedCertificate:
-          Failure responding to request: StatusCode=403 -- Original Error: autorest/azure:
-          Service returned an error. Status=403 Code=&quot;Forbidden&quot; Message=&quot;The
-          user, group or application &apos;appid=04 does not have certificates purge
-          permission on key vault &apos;tabwinkv;location=westus&apos;. InnerError={&quot;code&quot;:&quot;ForbiddenByPolicy&quot;}</td>
-      <td
-      style="text-align:left"></td>
-    </tr>
-    <tr>
       <td style="text-align:left">Vault again</td>
       <td style="text-align:left">Message=&quot;The vault name &apos;xxx&apos; is already in use. Vault
         names are globaly unique so it is possible that the name is already taken.
@@ -89,7 +77,7 @@ I'm not saying key vaults are tricky but....
       </td>
     </tr>
     <tr>
-      <td style="text-align:left"></td>
+      <td style="text-align:left">Vault...</td>
       <td style="text-align:left">
         <p>Error checking for presence of existing Certificate</p>
         <p>keyvault.BaseClient#GetCertificate: Failure responding to request: StatusCode=403</p>
@@ -98,26 +86,33 @@ I'm not saying key vaults are tricky but....
       <td style="text-align:left"></td>
     </tr>
     <tr>
-      <td style="text-align:left"></td>
+      <td style="text-align:left">Dependencies</td>
       <td style="text-align:left">Error: Cycle: azurerm_key_vault_access_policy.vm, azurerm_key_vault_certificate.winrm_certificate,
         azurerm_windows_virtual_machine.windows_vm</td>
-      <td style="text-align:left"><a href="https://serverfault.com/questions/1005761/what-does-error-cycle-means-in-terraform">https://serverfault.com/questions/1005761/what-does-error-cycle-means-in-terraform</a>
+      <td style="text-align:left">
+        <p><a href="https://serverfault.com/questions/1005761/what-does-error-cycle-means-in-terraform">https://serverfault.com/questions/1005761/what-does-error-cycle-means-in-terraform</a>
+        </p>
+        <p>I&apos;d got too many [depends on] configured</p>
       </td>
     </tr>
     <tr>
-      <td style="text-align:left"></td>
+      <td style="text-align:left">AzureRM</td>
       <td style="text-align:left">Error: Error ensuring Resource Providers are registered.</td>
-      <td style="text-align:left"><a href="https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_provider_registration">https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_provider_registration</a>
+      <td style="text-align:left">
+        <p><a href="https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_provider_registration">https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_provider_registration</a>
+        </p>
+        <p>I updated the registered provide to be specific to the one I was using.</p>
       </td>
     </tr>
     <tr>
-      <td style="text-align:left"></td>
+      <td style="text-align:left">Key vault</td>
       <td style="text-align:left">Error: waiting for creation of Windows Virtual Machine &quot;TABWIN-TFVM&quot;
         (Resource Group &quot;TABWIN-TFrg&quot;): Code=&quot;KeyVaultAccessForbidden&quot;
         Message=&quot;Key Vault <a href="https://tabwinkv-jt365tb01.vault.azure.net/secrets/winrm-TABWIN-cert/58a87f1a91284a49a0bd6600f80a21b9">https://tabwinkv-jt365tb01.vault.azure.net/secrets/winrm-TABWIN-</a>either
         has not been enabled for deployment or the vault id provided, /subscriptions/x/resourceGroups/TABWIN-TFrg/providers/Microsoft.KeyVault/vaults/tabwinkv-jt365tb01,
         does not match the Key Vault&apos;s true resource id.&quot;</td>
-      <td style="text-align:left">enabled_for_deployment = true</td>
+      <td style="text-align:left"><code>enabled_for_deployment = true</code>
+      </td>
     </tr>
     <tr>
       <td style="text-align:left"></td>
