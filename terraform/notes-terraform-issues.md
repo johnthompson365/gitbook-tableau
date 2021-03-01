@@ -115,15 +115,7 @@ I'm not saying key vaults are tricky but....
       </td>
     </tr>
     <tr>
-      <td style="text-align:left"></td>
-      <td style="text-align:left">Error: A resource with the ID &quot;/subscriptions/x/resourceGroups/TABWIN-TFrg/providers/Microsoft.Compute/virtualMachines/TABWIN-TFVM&quot;
-        already exists - to be managed via Terraform this resource needs to be
-        imported into the State. Please see the resource documentation for &quot;azurerm_windows_virtual_machine&quot;
-        for more information.</td>
-      <td style="text-align:left">terraform destroy</td>
-    </tr>
-    <tr>
-      <td style="text-align:left"></td>
+      <td style="text-align:left">Already exists</td>
       <td style="text-align:left">already exists - to be managed via Terraform this resource needs to be
         imported into the State</td>
       <td style="text-align:left">
@@ -137,7 +129,7 @@ I'm not saying key vaults are tricky but....
       </td>
     </tr>
     <tr>
-      <td style="text-align:left"></td>
+      <td style="text-align:left">Already exists</td>
       <td style="text-align:left">Error: creating Windows Virtual Machine &quot;TABWIN-TFVM&quot;.VirtualMachinesClient#CreateOrUpdate:
         Failure sending request: StatusCode=0 -- Original Error: autorest/azure:
         Service returned an error. Status= Code=&quot;ConflictingUserInput&quot;
