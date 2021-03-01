@@ -127,6 +127,10 @@ I'm not saying key vaults are tricky but....
       <td style="text-align:left">already exists - to be managed via Terraform this resource needs to be
         imported into the State</td>
       <td style="text-align:left">
+        <p>terraform import &lt;terraform resource name&gt;.&lt;resource label&gt;
+          &lt;Azure Resource ID&gt;</p>
+        <p>terraform import azurerm_resource_group.rg</p>
+        <p></p>
         <p>terraform import azurerm_windows_virtual_machine.windows_vm /subscriptions/x/resourceGroups/TABWIN-TFrg/providers/Microsoft.Compute/virtualMachines/TABWIN-TFVM</p>
         <p></p>
         <p>terraform destroy</p>
