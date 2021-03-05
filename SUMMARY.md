@@ -13,6 +13,7 @@
 
 * [Notes: learn Terraform Modules](terraform/notes-learn-terraform-modules.md)
 * [Terraform Issues](terraform/notes-terraform-issues.md)
+* [Next steps](terraform/next-steps.md)
 
 ## Useful Links
 

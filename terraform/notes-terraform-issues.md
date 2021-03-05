@@ -137,6 +137,18 @@ I'm not saying key vaults are tricky but....
         Only CreateOption.Attach is supported.&quot;</td>
       <td style="text-align:left">Used Terraform import again</td>
     </tr>
+    <tr>
+      <td style="text-align:left">State</td>
+      <td style="text-align:left">Error: Error locking state: Error acquiring the state lock: resource temporarily
+        unavailable</td>
+      <td style="text-align:left">
+        <p>If there is no other process still running: run this command</p>
+        <p><code>terraform force-unlock 9db590f1-b6fe-c5f2-2678-8804f089deba</code>
+        </p>
+        <p>(where the numerical id should be replace by the one mentioned in the
+          error message)</p>
+      </td>
+    </tr>
   </tbody>
 </table>
 
