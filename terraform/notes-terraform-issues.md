@@ -149,6 +149,16 @@ I'm not saying key vaults are tricky but....
           error message)</p>
       </td>
     </tr>
+    <tr>
+      <td style="text-align:left">CustomScriptExtension</td>
+      <td style="text-align:left">Error: compute.VirtualMachineExtensionsClient#CreateOrUpdate: Failure
+        sending request: StatusCode=0 -- Original Error: Code=&quot;ArtifactVersionNotFound&quot;
+        Message=&quot;No version found in the artifact repository that satisfies
+        the requested version &apos;1.10&apos; for VM extension with publisher
+        &apos;Microsoft.Azure.Extensions&apos; and type &apos;CustomScript&apos;.&quot;</td>
+      <td
+      style="text-align:left"></td>
+    </tr>
   </tbody>
 </table>
 

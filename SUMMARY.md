@@ -31,3 +31,7 @@
 
 * [Draft: Azure AD and Tableau](draft-azure-ad-saml-and-tableau-online.md)
 
+## Code Snippets
+
+* [WinRM](code-snippets/winrm.md)
+
