@@ -130,3 +130,31 @@ resource "null_resource" "winrm_connection_test" {
 }
 ```
 
+Connection issue with long running script:
+
+Initial issue with Start-bitstransfer only workign when user is logged on.
+
+Changed that to .Net method to download file.
+
+`[System.Net.WebClient]::new().DownloadFile($url,$($folder+$DownloadFile))`
+
+```text
+null_resource.winrm_connection_test[0]: Still creating... [8m40s elapsed]
+null_resource.winrm_connection_test[0]: Still creating... [8m50s elapsed]
+null_resource.winrm_connection_test[0]: Still creating... [9m0s elapsed]
+null_resource.winrm_connection_test[0]: Still creating... [9m10s elapsed]
+null_resource.winrm_connection_test[0]: Still creating... [9m20s elapsed]
+
+
+Error: error executing "C:/Temp/terraform_1958524305.cmd": unknown error Post "https://13.93.203.89:5986/wsman": net/http: timeout awaiting response headers
+```
+
+Fixed by extending the WinRM timeout - `winrm set winrm/config @{MaxTimeoutms="27000000"}`
+
+Error setting PATH in the script...
+
+```text
+[2021/03/20/ 16:39:33], Adding TSM to local Windows system PATH
+null_resource.winrm_connection_test[0] (remote-exec): Get-ItemProperty : Cannot find path 'C:\Program Files\Tableau\Tableau Server\Packages' because it does not exist.
+```
+
