@@ -1,10 +1,10 @@
 ---
-description: Comparing the approaches and code for deploying Tableau into Azure
+description: Comparing the approaches and code for deploying Tableau into Azure.
 ---
 
 # WinRM Provisioner Connection or CustomScriptExtension
 
-### The challenge... 
+## The Challenge... 
 
 ...if you wish to accept:
 

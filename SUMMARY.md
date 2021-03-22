@@ -11,6 +11,7 @@
 
 ## Terraform
 
+* [WinRM Provisioner Connection or CustomScriptExtension](terraform/winrm.md)
 * [Notes: learn Terraform Modules](terraform/notes-learn-terraform-modules.md)
 * [Terraform Issues](terraform/notes-terraform-issues.md)
 * [Next steps](terraform/next-steps.md)
@@ -32,6 +33,4 @@
 * [Draft: Azure AD and Tableau](draft-azure-ad-saml-and-tableau-online.md)
 
 ## Code Snippets
-
-* [WinRM Provisioner Connection or CustomScriptExtension](code-snippets/winrm.md)
 
