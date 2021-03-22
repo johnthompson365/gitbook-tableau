@@ -14,7 +14,7 @@ There were two approaches that I found to configure the Windows server post depl
 
 ## WinRM Approach
 
-Firstly, a big thank you goes out to Claranet as they have contributed a whole host of useful modules to the Terraform registry. As I am learning Terraform I wanted to beg, borrow and steal to _build_ my own but [this module](https://registry.terraform.io/modules/claranet/windows-vm/azurerm/latest) was a great starting point. I _borrowed_ not only the code but also the structure of the module as part of my Terraform learning experience. 
+Firstly, a big thank you goes out to Claranet as they have contributed a whole host of useful modules to the Terraform registry. As I am learning Terraform I wanted to beg, borrow and steal to _build_ my own, and [this module](https://registry.terraform.io/modules/claranet/windows-vm/azurerm/latest) was a great starting point. I _borrowed_ not only the code but also the structure of the module as part of my Terraform learning experience. 
 
 The high-level process is:
 
