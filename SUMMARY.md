@@ -33,5 +33,5 @@
 
 ## Code Snippets
 
-* [WinRM](code-snippets/winrm.md)
+* [WinRM Provisioner Connection or CustomScriptExtension](code-snippets/winrm.md)
 
